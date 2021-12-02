@@ -1,12 +1,11 @@
 import { User } from '../models/User';
+import {
+	IUserRepository,
+	ICreateUserDTO,
+	ICreateSessionDTO,
+} from './IUserRepository';
 
-interface ICreateUserDTO {
-	name: string;
-	email: string;
-	password: string;
-}
-
-class UsersRepository {
+class UsersRepository implements IUserRepository {
 	private users: User[];
 
 	constructor() {
@@ -27,12 +26,16 @@ class UsersRepository {
 		return user;
 	}
 
-	list(): User[] {
-		return this.users;
+	findByEmail(email: string): User {
+		const user = this.users.find(user => user.email === email);
+
+		return user;
 	}
 
-	findByName(name: string): User {
-		const user = this.users.find(user => user.name === name);
+	createSession({ email, password }: ICreateSessionDTO): User {
+		const user = this.users.find(
+			user => user.email === email && user.password === password,
+		);
 
 		return user;
 	}

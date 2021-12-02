@@ -1,28 +1,46 @@
 import { Router, Request, Response } from 'express';
 
 import { UsersRepository } from '../repositories/UsersRepository';
+import { CreateUserService } from '../services/CreateUserService';
 
 const usersRoutes = Router();
 const usersRepository = new UsersRepository();
 
-usersRoutes.post('/', (request: Request, response: Response): Response => {
-	const { name, email, password } = request.body;
+usersRoutes.post(
+	'/create',
+	(request: Request, response: Response): Response => {
+		const { name, email, password } = request.body;
 
-	const userAlreadyExists = usersRepository.findByName(name);
+		try {
+			const createUserService = new CreateUserService(usersRepository);
 
-	if (userAlreadyExists) {
-		return response.status(400).json({ error: 'Usuário já existe' });
-	}
+			const user = createUserService.execute({ name, email, password });
 
-	const user = usersRepository.create({ name, email, password });
+			return response.status(201).json({ user });
+		} catch (error) {
+			return response.status(error.statusCode).json({ error: error.message });
+		}
+	},
+);
 
-	return response.status(201).json(user);
-});
+usersRoutes.post(
+	'/session',
+	(request: Request, response: Response): Response => {
+		const { email, password } = request.body;
 
-usersRoutes.get('/', (request: Request, response: Response): Response => {
-	const users = usersRepository.list();
+		const users = usersRepository.createSession({
+			email,
+			password,
+		});
 
-	return response.status(200).json(users);
-});
+		if (!users) {
+			return response
+				.status(406)
+				.json({ error: 'E-mail ou senha incorretos!' });
+		}
 
-export default usersRoutes;
+		return response.status(200).json(users);
+	},
+);
+
+export { usersRoutes };
