@@ -1,6 +1,6 @@
-import { User } from '../models/User';
-import { UsersRepository } from '../repositories/UsersRepository';
-import AppError from '../utils/AppError';
+import AppError from '@errors/AppError';
+import { User } from '@models/User';
+import { UsersRepository } from '@repositories/fakes/UsersRepository';
 
 interface IRequest {
 	name: string;

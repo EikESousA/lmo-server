@@ -1,18 +1,22 @@
-import { User } from '../models/User';
+import { User } from '@models/User';
 import {
-	IUserRepository,
+	IUsersRepository,
 	ICreateUserDTO,
 	ICreateSessionDTO,
-} from './IUserRepository';
+} from '@repositories/models/IUsersRepository';
 
-class UsersRepository implements IUserRepository {
+class UsersRepository implements IUsersRepository {
 	private users: User[];
 
 	constructor() {
 		this.users = [];
 	}
 
-	create({ name, email, password }: ICreateUserDTO): User {
+	public async create({
+		name,
+		email,
+		password,
+	}: ICreateUserDTO): Promise<User> {
 		const user = new User();
 
 		Object.assign(user, {
@@ -26,13 +30,16 @@ class UsersRepository implements IUserRepository {
 		return user;
 	}
 
-	findByEmail(email: string): User {
+	public async findByEmail(email: string): Promise<User | undefined> {
 		const user = this.users.find(user => user.email === email);
 
 		return user;
 	}
 
-	createSession({ email, password }: ICreateSessionDTO): User {
+	public async createSession({
+		email,
+		password,
+	}: ICreateSessionDTO): Promise<User | undefined> {
 		const user = this.users.find(
 			user => user.email === email && user.password === password,
 		);

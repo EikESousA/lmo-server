@@ -1,6 +1,9 @@
-import { User } from '../models/User';
-import { UsersRepository } from '../repositories/UsersRepository';
-import AppError from '../utils/AppError';
+import 'reflect-metadata';
+
+import AppError from '@errors/AppError';
+import { User } from '@models/User';
+import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
 	name: string;
@@ -8,11 +11,15 @@ interface IRequest {
 	password: string;
 }
 
+@injectable()
 class CreateUserService {
-	constructor(private usersRepository: UsersRepository) {}
+	constructor(
+		@inject('UsersRepository')
+		private usersRepository: IUsersRepository,
+	) {}
 
-	execute({ name, email, password }: IRequest): User {
-		const userAlreadyExists = this.usersRepository.findByEmail(email);
+	public async execute({ name, email, password }: IRequest): Promise<User> {
+		const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
 		if (userAlreadyExists) {
 			throw new AppError('Usuário já existe!', 400);
