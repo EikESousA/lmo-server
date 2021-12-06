@@ -5,7 +5,7 @@ import {
 	ICreateSessionDTO,
 } from '@repositories/models/IUsersRepository';
 
-class PostgresUserRepository implements IUsersRepository {
+class PostgresUsersRepository implements IUsersRepository {
 	private users: User[];
 
 	constructor() {
@@ -38,4 +38,4 @@ class PostgresUserRepository implements IUsersRepository {
 	}
 }
 
-export { PostgresUserRepository };
+export { PostgresUsersRepository };

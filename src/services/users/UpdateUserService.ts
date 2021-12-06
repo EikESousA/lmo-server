@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 
-import AppError from '@errors/AppError';
+import { AppError } from '@errors/AppError';
 import { User } from '@models/User';
+import { IHashProvider } from '@providers/models/IHashProvider';
 import { IUsersRepository } from '@repositories/models/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 
@@ -12,10 +13,12 @@ interface IRequest {
 }
 
 @injectable()
-class CreateUserService {
+class UpdateUserService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
+		@inject('HashProvider')
+		private hashProvider: IHashProvider,
 	) {}
 
 	public async execute({ name, email, password }: IRequest): Promise<User> {
@@ -25,10 +28,16 @@ class CreateUserService {
 			throw new AppError('Usuário já existe!', 400);
 		}
 
-		const user = this.usersRepository.create({ name, email, password });
+		const hashedPassword = await this.hashProvider.generateHash(password);
+
+		const user = this.usersRepository.create({
+			name,
+			email,
+			password: hashedPassword,
+		});
 
 		return user;
 	}
 }
 
-export { CreateUserService };
+export { UpdateUserService };

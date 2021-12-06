@@ -1,16 +1,18 @@
 import { v4 as uuidV4 } from 'uuid';
 
-class User {
+class UserToken {
 	id: string;
-	name: string;
-	email: string;
-	password: string;
+	token: string;
+	user_id: string;
 	created_at: Date;
 	updated_at: Date;
 
 	constructor() {
 		if (!this.id) {
 			this.id = uuidV4();
+		}
+		if (!this.token) {
+			this.token = uuidV4();
 		}
 		if (!this.created_at) {
 			this.created_at = new Date();
@@ -21,4 +23,4 @@ class User {
 	}
 }
 
-export { User };
+export { UserToken };

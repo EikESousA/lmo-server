@@ -12,8 +12,8 @@ export default {
 	driver: process.env.MAIL_DRIVER || 'ethereal',
 	defaults: {
 		from: {
-			email: 'eike@gobarber.com',
-			name: 'Eike Natan',
+			email: 'eike.sousa@hotmail.com',
+			name: 'Eike SousA',
 		},
 	},
 } as IMailConfig;

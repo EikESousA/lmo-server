@@ -10,6 +10,7 @@ import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
 
 import '@repositories/index';
+import '@providers/index';
 
 const app = express();
 
