@@ -3,8 +3,8 @@ import 'express-async-errors';
 import 'dotenv/config';
 import 'reflect-metadata';
 
-import AppError from '@errors/AppError';
-import routes from '@routes/index.routes';
+import { AppError } from '@errors/AppError';
+import { routes } from '@routes/index.routes';
 import { errors } from 'celebrate';
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';

@@ -7,13 +7,11 @@ import { IUsersRepository } from '@repositories/models/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
-	name: string;
-	email: string;
-	password: string;
+	userId: string;
 }
 
 @injectable()
-class UpdateUserService {
+class ShowService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
@@ -21,23 +19,15 @@ class UpdateUserService {
 		private hashProvider: IHashProvider,
 	) {}
 
-	public async execute({ name, email, password }: IRequest): Promise<User> {
-		const userAlreadyExists = await this.usersRepository.findByEmail(email);
+	public async execute({ userId }: IRequest): Promise<User> {
+		const user = await this.usersRepository.findById(userId);
 
-		if (userAlreadyExists) {
-			throw new AppError('Usuário já existe!', 400);
+		if (!user) {
+			throw new AppError('Usuário não encontrado!');
 		}
-
-		const hashedPassword = await this.hashProvider.generateHash(password);
-
-		const user = this.usersRepository.create({
-			name,
-			email,
-			password: hashedPassword,
-		});
 
 		return user;
 	}
 }
 
-export { UpdateUserService };
+export { ShowService };

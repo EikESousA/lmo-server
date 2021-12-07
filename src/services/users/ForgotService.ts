@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 @injectable()
-class ForgotPasswordService {
+class ForgotService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
@@ -33,6 +33,7 @@ class ForgotPasswordService {
 		const forgotPasswordTemplate = path.resolve(
 			__dirname,
 			'..',
+			'..',
 			'views',
 			'forgot_password.hbs',
 		);
@@ -42,7 +43,7 @@ class ForgotPasswordService {
 				name: user.name,
 				email: user.email,
 			},
-			subject: '[GoBarber] Recuperação de senha!',
+			subject: '[Luar] Recuperação de senha!',
 			templateData: {
 				file: forgotPasswordTemplate,
 				variables: {
@@ -54,4 +55,4 @@ class ForgotPasswordService {
 	}
 }
 
-export { ForgotPasswordService };
+export { ForgotService };
