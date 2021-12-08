@@ -40,6 +40,12 @@ class AvatarService {
 
 		user.avatar = filename;
 
+		if (process.env.STORAGE_DRIVER === 'disk') {
+			user.avatar_url = `${process.env.APP_API_URL}/avatar/${filename}`;
+		} else {
+			user.avatar_url = `${process.env.AWS_BUCKET_URL}/avatar/${filename}`;
+		}
+
 		await this.usersRepository.save(user);
 
 		log(`🧑 Usuário alterou avatar - EMAIL: ${user.email}`);

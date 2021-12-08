@@ -12,7 +12,7 @@ export default {
 	driver: process.env.MAIL_DRIVER || 'ethereal',
 	defaults: {
 		from: {
-			email: 'eike.sousa@hotmail.com',
+			email: 'suporte@luar.app',
 			name: 'Eike SousA',
 		},
 	},

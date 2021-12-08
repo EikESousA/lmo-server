@@ -30,7 +30,7 @@ class S3StorageProvider implements IStorageProvider {
 			.putObject({
 				Bucket: `${process.env.AWS_BUCKET}/${folder}`,
 				Key: file,
-				ACL: 'bucket-owner-full-control',
+				ACL: 'public-read',
 				Body: fileContent,
 				ContentType,
 				ContentDisposition: `inline; filename=${file}`,
