@@ -4,6 +4,7 @@ import { AppError } from '@errors/AppError';
 import { User } from '@models/User';
 import { IHashProvider } from '@providers/models/IHashProvider';
 import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { log } from '@utils/log';
 import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
@@ -33,12 +34,14 @@ class UpdateService {
 		const user = await this.usersRepository.findById(userId);
 
 		if (!user) {
+			log(`❌ Usuário não autenticado`);
 			throw new AppError('Usuário não autenticado!');
 		}
 
 		const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
 
 		if (userWithUpdatedEmail && userWithUpdatedEmail.id !== userId) {
+			log(`❌ E-mail utilizado`);
 			throw new AppError('E-mail já está sendo utilizado!');
 		}
 
@@ -46,6 +49,7 @@ class UpdateService {
 		user.email = email;
 
 		if (password && !oldPassword) {
+			log(`❌ Antiga senha vazia`);
 			throw new AppError(
 				'Você precisa informar a antiga senha para ser alterado!',
 			);
@@ -58,11 +62,14 @@ class UpdateService {
 			);
 
 			if (!checkOldPassword) {
+				log(`❌ Antiga senha incorreta - SENHA: ${oldPassword}`);
 				throw new AppError('Senha antiga não está correta!');
 			}
 
 			user.password = await this.hashProvider.generateHash(password);
 		}
+
+		log(`🧑 Usuário atualizado - EMAIL: ${email}`);
 
 		return this.usersRepository.save(user);
 	}

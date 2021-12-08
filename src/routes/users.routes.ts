@@ -20,7 +20,7 @@ usersRoutes.post('/create', usersController.create);
 usersRoutes.post('/forgot', usersController.forgot);
 usersRoutes.post('/reset', usersController.reset);
 usersRoutes.post('/session', usersController.session);
-usersRoutes.post('/show', usersController.show);
+usersRoutes.post('/show', ensureAuthenticated, usersController.show);
 usersRoutes.put('/update', ensureAuthenticated, usersController.update);
 
 export { usersRoutes };

@@ -142,8 +142,6 @@ class UsersController {
 		const userId = request.user.id;
 		const { name, email, oldPassword, password } = request.body;
 
-		console.log(request.user);
-
 		try {
 			const updateService = container.resolve(UpdateService);
 

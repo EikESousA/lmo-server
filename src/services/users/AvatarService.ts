@@ -4,6 +4,7 @@ import { AppError } from '@errors/AppError';
 import { User } from '@models/User';
 import { IStorageProvider } from '@providers/models/IStorageProvider';
 import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { log } from '@utils/log';
 import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
@@ -24,6 +25,7 @@ class AvatarService {
 		const user = await this.usersRepository.findById(userId);
 
 		if (!user) {
+			log(`❌ Usuário não autenticado`);
 			throw new AppError('Usuário não autenticado!', 401);
 		}
 
@@ -36,6 +38,8 @@ class AvatarService {
 		user.avatar = filename;
 
 		await this.usersRepository.save(user);
+
+		log(`🧑 Usuário alterou avatar - EMAIL: ${user.email}`);
 
 		return user;
 	}

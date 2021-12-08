@@ -5,6 +5,7 @@ import { AppError } from '@errors/AppError';
 import { User } from '@models/User';
 import { IHashProvider } from '@providers/models/IHashProvider';
 import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { log } from '@utils/log';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
@@ -31,6 +32,7 @@ class SessionService {
 		const user = await this.usersRepository.findByEmail(email);
 
 		if (!user) {
+			log(`❌ Usuário incorreto - EMAIL: ${email}`);
 			throw new AppError('Usuário ou e-mail incorreto!', 401);
 		}
 
@@ -40,6 +42,7 @@ class SessionService {
 		);
 
 		if (!passwordMatched) {
+			log(`❌ Senha incorreta - SENHA: ${password}`);
 			throw new AppError('Usuário ou e-mail incorreto!', 401);
 		}
 
@@ -49,6 +52,8 @@ class SessionService {
 			subject: user.id,
 			expiresIn,
 		});
+
+		log(`🧑 Usuário conectado - EMAIL: ${email}`);
 
 		return { user, token };
 	}

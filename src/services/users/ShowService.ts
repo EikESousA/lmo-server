@@ -4,6 +4,7 @@ import { AppError } from '@errors/AppError';
 import { User } from '@models/User';
 import { IHashProvider } from '@providers/models/IHashProvider';
 import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { log } from '@utils/log';
 import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
@@ -23,8 +24,11 @@ class ShowService {
 		const user = await this.usersRepository.findById(userId);
 
 		if (!user) {
+			log(`❌ Usuário não existe`);
 			throw new AppError('Usuário não encontrado!');
 		}
+
+		log(`🧑 Usuário encontrado - EMAIL: ${user.email}`);
 
 		return user;
 	}

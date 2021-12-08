@@ -5,6 +5,7 @@ import 'reflect-metadata';
 
 import { AppError } from '@errors/AppError';
 import { routes } from '@routes/index.routes';
+import { log } from '@utils/log';
 import { errors } from 'celebrate';
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
@@ -36,5 +37,5 @@ app.use(
 );
 
 app.listen(3333, () => {
-	console.log('🚀 Server started on port 3333!');
+	log('🌎 Server iniciado - PORTA: 3333');
 });
