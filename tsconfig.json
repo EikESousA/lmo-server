@@ -14,6 +14,7 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
 		"paths": {
+      "@assets/*": ["assets/*"],
       "@configs/*": ["configs/*"],
       "@controllers/*": ["controllers/*"],
       "@errors/*": ["errors/*"],

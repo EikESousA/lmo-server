@@ -50,10 +50,10 @@ class UsersController {
 
 			return response.json({ user });
 		} catch (error) {
-			if (error instanceof AppError) {
-				return response.status(error.statusCode).json({ error: error.message });
-			}
-			return response.json(error);
+			const logError = error as AppError;
+			return response
+				.status(logError.statusCode)
+				.json({ error: logError.message });
 		}
 	}
 

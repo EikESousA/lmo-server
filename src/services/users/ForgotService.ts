@@ -32,12 +32,20 @@ class ForgotService {
 
 		const { token } = await this.usersTokenRepository.generate(user.id);
 
-		const forgotPasswordTemplate = path.resolve(
+		const forgotTemplateDir = path.resolve(
 			__dirname,
 			'..',
 			'..',
 			'views',
-			'forgot_password.hbs',
+			'forgot.hbs',
+		);
+
+		const imgDir = path.resolve(
+			__dirname,
+			'..',
+			'..',
+			'assets',
+			'stamp_white.png',
 		);
 
 		log(`🧑 Usuário esqueceu senha - EMAIL: ${email}`);
@@ -49,8 +57,9 @@ class ForgotService {
 			},
 			subject: '[Luar] Recuperação de senha!',
 			templateData: {
-				file: forgotPasswordTemplate,
+				file: forgotTemplateDir,
 				variables: {
+					img: imgDir,
 					name: user.name,
 					link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
 				},

@@ -9,7 +9,6 @@ interface IUploadConfig {
 	driver: 'disk' | 's3';
 
 	tmpFolder: string;
-	uploadsFolder: string;
 
 	multer: {
 		storage: StorageEngine;
@@ -27,7 +26,6 @@ export default {
 	driver: process.env.STORAGE_DRIVER || 'disk',
 
 	tmpFolder,
-	uploadsFolder: path.resolve(tmpFolder, 'uploads'),
 
 	multer: {
 		storage: multer.diskStorage({
@@ -43,7 +41,7 @@ export default {
 	config: {
 		disk: {},
 		aws: {
-			bucket: 'luar',
+			bucket: process.env.AWS_BUCKET,
 		},
 	},
 } as IUploadConfig;
