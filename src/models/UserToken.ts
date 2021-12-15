@@ -4,8 +4,11 @@ class UserToken {
 	id: string;
 	token: string;
 	user_id: string;
+	info: number;
 	created_at: Date;
 	updated_at: Date;
+
+	// Info - [0: esqueceu | 1: criar]
 
 	constructor() {
 		if (!this.id) {

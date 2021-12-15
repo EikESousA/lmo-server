@@ -13,6 +13,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import '@repositories/index';
 import '@providers/index';
 
+import '@databases/index';
+
 const app = express();
 
 app.use(cors());

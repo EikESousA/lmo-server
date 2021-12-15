@@ -8,11 +8,16 @@ class PostgresUsersTokenRepository implements IUsersTokenRepository {
 		this.usersToken = [];
 	}
 
-	public async generate(user_id: string): Promise<UserToken> {
+	public listRepository(): UserToken[] {
+		return this.usersToken;
+	}
+
+	public async generate(user_id: string, info: number): Promise<UserToken> {
 		const userToken = new UserToken();
 
 		Object.assign(userToken, {
 			user_id,
+			info,
 		});
 
 		this.usersToken.push(userToken);

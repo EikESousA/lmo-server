@@ -13,6 +13,10 @@ class UsersRepository implements IUsersRepository {
 		this.users = [];
 	}
 
+	public listRepository(): User[] {
+		return this.users;
+	}
+
 	public async create({
 		name,
 		email,

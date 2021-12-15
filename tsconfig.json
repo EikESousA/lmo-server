@@ -17,6 +17,7 @@
       "@assets/*": ["assets/*"],
       "@configs/*": ["configs/*"],
       "@controllers/*": ["controllers/*"],
+      "@databases/*": ["databases/*"],
       "@errors/*": ["errors/*"],
       "@middlewares/*": ["middlewares/*"],
       "@models/*": ["models/*"],
