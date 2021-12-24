@@ -1,4 +1,4 @@
-import { User } from '@models/User';
+import { User } from '@entities/User';
 
 interface ICreateUserDTO {
 	name: string;
@@ -14,7 +14,6 @@ interface IFindAllProvidersDTO {
 }
 
 interface IUsersRepository {
-	listRepository(): User[];
 	create({ name, email, password }: ICreateUserDTO): Promise<User>;
 	save(user: User): Promise<User>;
 	session({ email, password }: ISessionDTO): Promise<User | undefined>;
