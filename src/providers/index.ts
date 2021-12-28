@@ -6,10 +6,10 @@ import { EtherealMailProvider } from '@providers/implementations/EtherealMailPro
 import { HandlebarsMailTemplateProvider } from '@providers/implementations/HandlebarsMailTemplateProvider';
 import { S3StorageProvider } from '@providers/implementations/S3StorageProvider';
 import { SESMailProvider } from '@providers/implementations/SESMailProvider';
-import { IHashProvider } from '@providers/models/IHashProvider';
-import { IMailProvider } from '@providers/models/IMailProvider';
-import { IMailTemplateProvider } from '@providers/models/IMailTemplateProvider';
-import { IStorageProvider } from '@providers/models/IStorageProvider';
+import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { IMailProvider } from '@providers/interfaces/IMailProvider';
+import { IMailTemplateProvider } from '@providers/interfaces/IMailTemplateProvider';
+import { IStorageProvider } from '@providers/interfaces/IStorageProvider';
 import { container } from 'tsyringe';
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);

@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 
 import authConfig from '@configs/auth';
+import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
-import { User } from '@models/User';
-import { IHashProvider } from '@providers/models/IHashProvider';
-import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
@@ -30,7 +30,6 @@ class SessionService {
 
 	public async execute({ email, password }: IRequest): Promise<IResponse> {
 		const user = await this.usersRepository.findByEmail(email);
-
 		if (!user) {
 			log(`❌ Usuário incorreto - EMAIL: ${email}`);
 			throw new AppError('Usuário ou e-mail incorreto!', 401);

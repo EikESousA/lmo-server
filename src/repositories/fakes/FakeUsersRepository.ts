@@ -1,16 +1,20 @@
-import { User } from '@models/User';
+import { User } from '@entities/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
 	ISessionDTO,
 	IFindAllProvidersDTO,
-} from '@repositories/models/IUsersRepository';
+} from '@repositories/interfaces/IUsersRepository';
 
-class PostgresUsersRepository implements IUsersRepository {
+class FakeUsersRepository implements IUsersRepository {
 	private users: User[];
 
 	constructor() {
 		this.users = [];
+	}
+
+	public listRepository(): User[] {
+		return this.users;
 	}
 
 	public async create({
@@ -72,4 +76,4 @@ class PostgresUsersRepository implements IUsersRepository {
 	}
 }
 
-export { PostgresUsersRepository };
+export { FakeUsersRepository };

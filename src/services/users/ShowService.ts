@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
+import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
-import { User } from '@models/User';
-import { IHashProvider } from '@providers/models/IHashProvider';
-import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 import { inject, injectable } from 'tsyringe';
 

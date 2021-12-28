@@ -13,7 +13,7 @@ export default {
 	defaults: {
 		from: {
 			email: 'suporte@luar.app',
-			name: 'Eike SousA',
+			name: 'Luar - Suporte',
 		},
 	},
 } as IMailConfig;

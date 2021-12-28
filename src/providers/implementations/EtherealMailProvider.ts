@@ -1,5 +1,8 @@
-import { IMailProvider, ISendMailDTO } from '@providers/models/IMailProvider';
-import { IMailTemplateProvider } from '@providers/models/IMailTemplateProvider';
+import {
+	IMailProvider,
+	ISendMailDTO,
+} from '@providers/interfaces/IMailProvider';
+import { IMailTemplateProvider } from '@providers/interfaces/IMailTemplateProvider';
 import nodemailer, { Transporter } from 'nodemailer';
 import { injectable, inject } from 'tsyringe';
 
@@ -44,8 +47,8 @@ class EtherealMailProvider implements IMailProvider {
 			html: await this.mailTemplateProvider.parse(templateData),
 		});
 
-		console.log(`Message sent: ${message.messageId}`);
-		console.log(`Preview URL: ${nodemailer.getTestMessageUrl(message)}`);
+		console.info(`Message sent: ${message.messageId}`);
+		console.info(`Preview URL: ${nodemailer.getTestMessageUrl(message)}`);
 	}
 }
 

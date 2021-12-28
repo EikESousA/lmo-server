@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { AppError } from '@errors/AppError';
-import { IMailProvider } from '@providers/models/IMailProvider';
-import { IUsersRepository } from '@repositories/models/IUsersRepository';
-import { IUsersTokenRepository } from '@repositories/models/IUsersTokenRepository';
+import { IMailProvider } from '@providers/interfaces/IMailProvider';
+import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
 import path from 'path';
 import { inject, injectable } from 'tsyringe';
@@ -30,7 +30,7 @@ class ForgotService {
 			throw new AppError('Usuário não existe!', 400);
 		}
 
-		const { token } = await this.usersTokenRepository.generate(user.id);
+		const { token } = await this.usersTokenRepository.generate(user.id, 0);
 
 		const forgotTemplateDir = path.resolve(
 			__dirname,
@@ -39,16 +39,6 @@ class ForgotService {
 			'views',
 			'forgot.hbs',
 		);
-
-		const imgDir = path.resolve(
-			__dirname,
-			'..',
-			'..',
-			'assets',
-			'stamp_white.png',
-		);
-
-		log(`🧑 Usuário esqueceu senha - EMAIL: ${email}`);
 
 		await this.mailProvider.sendMail({
 			to: {
@@ -59,12 +49,13 @@ class ForgotService {
 			templateData: {
 				file: forgotTemplateDir,
 				variables: {
-					img: imgDir,
 					name: user.name,
-					link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+					link: `${process.env.APP_WEB_URL}/resetar?token=${token}`,
 				},
 			},
 		});
+
+		log(`🧑 Usuário esqueceu senha - EMAIL: ${email}`);
 	}
 }
 

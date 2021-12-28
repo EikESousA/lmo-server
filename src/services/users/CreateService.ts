@@ -1,10 +1,13 @@
 import 'reflect-metadata';
 
+import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
-import { User } from '@models/User';
-import { IHashProvider } from '@providers/models/IHashProvider';
-import { IUsersRepository } from '@repositories/models/IUsersRepository';
+import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { IMailProvider } from '@providers/interfaces/IMailProvider';
+import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
+import path from 'path';
 import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
@@ -20,6 +23,10 @@ class CreateService {
 		private usersRepository: IUsersRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
+		@inject('UsersTokenRepository')
+		private usersTokenRepository: IUsersTokenRepository,
+		@inject('MailProvider')
+		private mailProvider: IMailProvider,
 	) {}
 
 	public async execute({ name, email, password }: IRequest): Promise<User> {
@@ -32,13 +39,38 @@ class CreateService {
 
 		const hashedPassword = await this.hashProvider.generateHash(password);
 
-		log(`🧑 Usuário criado - EMAIL: ${email}`);
-
-		const user = this.usersRepository.create({
+		const user = await this.usersRepository.create({
 			name,
 			email,
 			password: hashedPassword,
 		});
+
+		const userToken = await this.usersTokenRepository.generate(user.id, 1);
+
+		const createTemplateDir = path.resolve(
+			__dirname,
+			'..',
+			'..',
+			'views',
+			'create.hbs',
+		);
+
+		await this.mailProvider.sendMail({
+			to: {
+				name,
+				email,
+			},
+			subject: '[Luar] Recuperação de senha!',
+			templateData: {
+				file: createTemplateDir,
+				variables: {
+					name,
+					link: `${process.env.APP_WEB_URL}/usuario/confirmar?token=${userToken.token}`,
+				},
+			},
+		});
+
+		log(`🧑 Usuário criado - EMAIL: ${email}`);
 
 		return user;
 	}

@@ -1,0 +1,15 @@
+{
+  "username": "docker",
+  "password": "luar",
+  "type": "postgres",
+  "port": 5432,
+  "host": "localhost",
+  "database": "luar",
+	"synchronize": true,
+  "logging": false,
+  "migrations": ["./src/databases/migrations/*.ts"],
+  "entities": ["./src/entities/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/databases/migrations"
+  }
+}

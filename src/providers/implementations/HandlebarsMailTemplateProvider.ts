@@ -1,7 +1,7 @@
 import {
 	IMailTemplateProvider,
 	IParseMailTemplateDTO,
-} from '@providers/models/IMailTemplateProvider';
+} from '@providers/interfaces/IMailTemplateProvider';
 import fs from 'fs';
 import handlebars from 'handlebars';
 
