@@ -15,16 +15,17 @@ import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 
+const assetsFolder = path.resolve(__dirname, 'assets');
+
 const app = express();
-const assetsFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
 app.use(cors());
 
 app.use(express.json());
 
-app.use('/files', express.static(uploadConfig.uploadsFolde));
-app.use('/assets', express.static(uploadConfig.uploadsFolde));
+app.use('/assets', express.static(assetsFolder));
 app.use('/avatar', express.static(`${uploadConfig.tmpFolder}/avatar`));
+app.use('/products', express.static(`${uploadConfig.tmpFolder}/produtos`));
 
 app.use(routes);
 
