@@ -1,12 +1,12 @@
-import { User } from '@models/User';
+import { User } from '@entities/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
 	ISessionDTO,
 	IFindAllProvidersDTO,
-} from '@repositories/models/IUsersRepository';
+} from '@repositories/interfaces/IUsersRepository';
 
-class UsersRepository implements IUsersRepository {
+class FakeUsersRepository implements IUsersRepository {
 	private users: User[];
 
 	constructor() {
@@ -76,4 +76,4 @@ class UsersRepository implements IUsersRepository {
 	}
 }
 
-export { UsersRepository };
+export { FakeUsersRepository };

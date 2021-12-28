@@ -1,5 +1,5 @@
 import uploadConfig from '@configs/upload';
-import { IStorageProvider } from '@providers/models/IStorageProvider';
+import { IStorageProvider } from '@providers/interfaces/IStorageProvider';
 import aws, { S3 } from 'aws-sdk';
 import fs from 'fs';
 import mime from 'mime';

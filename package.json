@@ -8,12 +8,15 @@
     "build": "tsc",
     "start": "ts-node src/server.ts",
     "test": "jest",
-		"typeorm": "ts-node-dev ./node_modules/typeorm/cli"
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+		"typeorm:run": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli migration:run",
+    "typeorm:revert": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli migration:revert"
   },
   "dependencies": {
     "aws-sdk": "^2.1043.0",
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.0",
+    "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
     "date-fns": "^2.27.0",
     "dotenv": "^10.0.0",

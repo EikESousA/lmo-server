@@ -1,7 +1,7 @@
-import { UserToken } from '@models/UserToken';
-import { IUsersTokenRepository } from '@repositories/models/IUsersTokenRepository';
+import { UserToken } from '@entities/UserToken';
+import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 
-class UsersTokenRepository implements IUsersTokenRepository {
+class FakeUsersTokenRepository implements IUsersTokenRepository {
 	private usersToken: UserToken[];
 
 	constructor() {
@@ -34,4 +34,4 @@ class UsersTokenRepository implements IUsersTokenRepository {
 	}
 }
 
-export { UsersTokenRepository };
+export { FakeUsersTokenRepository };

@@ -1,3 +1,5 @@
+import uploadConfig from '@configs/upload';
+import { Exclude, Expose } from 'class-transformer';
 import {
 	Entity,
 	PrimaryGeneratedColumn,
@@ -5,26 +7,36 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-import { v4 as uuidV4 } from 'uuid';
 
 @Entity('user')
 class User {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
+
 	@Column()
 	name: string;
+
 	@Column()
 	email: string;
+
 	@Column()
+	@Exclude()
 	password: string;
-	@Column()
-	phone?: string;
-	@Column()
-	avatar?: string;
+
+	@Column({ default: null, nullable: true })
+	phone: string;
+
+	@Column({ default: null, nullable: true })
+	avatar: string;
+
+	@Column({ default: 1 })
+	level: number;
+
 	@CreateDateColumn()
-	created_at?: Date;
+	created_at: Date;
+
 	@UpdateDateColumn()
-	updated_at?: Date;
+	updated_at: Date;
 
 	@Expose({ name: 'avatar_url' })
 	getAvatar_URL(): string | null {

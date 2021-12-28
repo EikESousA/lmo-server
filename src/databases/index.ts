@@ -1,13 +1,4 @@
-import { createConnection, getConnectionOptions } from 'typeorm';
+/* eslint-disable no-return-await */
+import { createConnection } from 'typeorm';
 
-interface IOptions {
-	host: string;
-}
-
-getConnectionOptions().then(options => {
-	const newOptions = options as IOptions;
-	newOptions.host = 'database';
-	createConnection({
-		...options,
-	});
-});
+(async () => await createConnection())();

@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
 import { AppError } from '@errors/AppError';
-import { IHashProvider } from '@providers/models/IHashProvider';
-import { IUsersRepository } from '@repositories/models/IUsersRepository';
-import { IUsersTokenRepository } from '@repositories/models/IUsersTokenRepository';
+import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
 import { isAfter, addHours } from 'date-fns';
 import { inject, injectable } from 'tsyringe';

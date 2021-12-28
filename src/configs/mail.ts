@@ -12,8 +12,8 @@ export default {
 	driver: process.env.MAIL_DRIVER || 'ethereal',
 	defaults: {
 		from: {
-			email: 'eike.sousa@hotmail.com',
-			name: 'Eike SousA',
+			email: 'suporte@luar.app',
+			name: 'Luar - Suporte',
 		},
 	},
 } as IMailConfig;

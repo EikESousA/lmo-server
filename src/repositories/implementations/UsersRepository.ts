@@ -4,14 +4,14 @@ import {
 	ICreateUserDTO,
 	ISessionDTO,
 	IFindAllProvidersDTO,
-} from '@repositories/models/IUsersRepository';
+} from '@repositories/interfaces/IUsersRepository';
 import { Repository, getRepository, Not } from 'typeorm';
 
-class PostgresUsersRepository implements IUsersRepository {
-	private ormRepository: Repository<User>;
+class UsersRepository implements IUsersRepository {
+	private repository: Repository<User>;
 
-	private constructor() {
-		this.ormRepository = getRepository(User);
+	constructor() {
+		this.repository = getRepository(User);
 	}
 
 	public async create({
@@ -19,36 +19,36 @@ class PostgresUsersRepository implements IUsersRepository {
 		email,
 		password,
 	}: ICreateUserDTO): Promise<User> {
-		const user = this.ormRepository.create({
+		const user = this.repository.create({
 			name,
 			email,
 			password,
 		});
-		await this.ormRepository.save(user);
+		await this.repository.save(user);
 		return user;
 	}
 
 	public async save(user: User): Promise<User> {
-		return this.ormRepository.save(user);
+		return this.repository.save(user);
 	}
 
 	public async session({
 		email,
 		password,
 	}: ISessionDTO): Promise<User | undefined> {
-		const user = await this.ormRepository.findOne({
+		const user = await this.repository.findOne({
 			where: { email, password },
 		});
 		return user;
 	}
 
 	public async findByEmail(email: string): Promise<User | undefined> {
-		const user = await this.ormRepository.findOne({ where: { email } });
+		const user = await this.repository.findOne({ where: { email } });
 		return user;
 	}
 
 	public async findById(id: string): Promise<User | undefined> {
-		const user = await this.ormRepository.findOne(id);
+		const user = await this.repository.findOne(id);
 		return user;
 	}
 
@@ -58,17 +58,17 @@ class PostgresUsersRepository implements IUsersRepository {
 		let users: User[];
 
 		if (except_user_id) {
-			users = await this.ormRepository.find({
+			users = await this.repository.find({
 				where: {
 					id: Not(except_user_id),
 				},
 			});
 		} else {
-			users = await this.ormRepository.find();
+			users = await this.repository.find();
 		}
 
 		return users;
 	}
 }
 
-export { PostgresUsersRepository };
+export { UsersRepository };

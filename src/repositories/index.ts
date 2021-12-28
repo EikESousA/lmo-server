@@ -1,7 +1,7 @@
-import { UsersRepository } from '@repositories/fakes/UsersRepository';
-import { UsersTokenRepository } from '@repositories/fakes/UsersTokenRepository';
-import { IUsersRepository } from '@repositories/models/IUsersRepository';
-import { IUsersTokenRepository } from '@repositories/models/IUsersTokenRepository';
+import { UsersRepository } from '@repositories/implementations/UsersRepository';
+import { UsersTokenRepository } from '@repositories/implementations/UsersTokenRepository';
+import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { container } from 'tsyringe';
 
 container.registerSingleton<IUsersRepository>(

@@ -1,29 +1,32 @@
-import { v4 as uuidV4 } from 'uuid';
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	Generated,
+} from 'typeorm';
 
+@Entity('user_token')
 class UserToken {
+	@PrimaryGeneratedColumn('uuid')
 	id: string;
+
+	@Column()
+	@Generated('uuid')
 	token: string;
+
+	@Column()
 	user_id: string;
+
+	@Column()
 	info: number;
-	created_at: Date;
-	updated_at: Date;
 
-	// Info - [0: esqueceu | 1: criar]
+	@CreateDateColumn()
+	created_at?: Date;
 
-	constructor() {
-		if (!this.id) {
-			this.id = uuidV4();
-		}
-		if (!this.token) {
-			this.token = uuidV4();
-		}
-		if (!this.created_at) {
-			this.created_at = new Date();
-		}
-		if (!this.updated_at) {
-			this.updated_at = new Date();
-		}
-	}
+	@UpdateDateColumn()
+	updated_at?: Date;
 }
 
 export { UserToken };
