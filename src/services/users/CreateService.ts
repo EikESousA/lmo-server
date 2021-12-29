@@ -64,6 +64,7 @@ class CreateService {
 			templateData: {
 				file: createTemplateDir,
 				variables: {
+					image: `https://luar-roupaseacessorios.s3.us-east-2.amazonaws.com/assets/stamp_white.png`,
 					name,
 					link: `${process.env.APP_WEB_URL}/usuario/confirmar?token=${userToken.token}`,
 				},

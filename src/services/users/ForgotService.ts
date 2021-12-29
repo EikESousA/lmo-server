@@ -49,6 +49,7 @@ class ForgotService {
 			templateData: {
 				file: forgotTemplateDir,
 				variables: {
+					image: `https://luar-roupaseacessorios.s3.us-east-2.amazonaws.com/assets/stamp_white.png`,
 					name: user.name,
 					link: `${process.env.APP_WEB_URL}/resetar?token=${token}`,
 				},

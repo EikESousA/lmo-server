@@ -3,9 +3,11 @@
 
 node_modules/
 build/
-temp/
-.env
-coverage
+coverage/
 
-tmp/*
-!tmp/.gitkeep
+tmp/avatar/*
+!tmp/avatar/.gitkeep
+tmp/products/*
+!tmp/products/.gitkeep
+
+.env
