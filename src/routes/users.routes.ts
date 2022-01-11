@@ -1,8 +1,9 @@
-import uploadConfig from '@configs/upload';
-import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
-import { UsersController } from 'controllers/UsersController';
 import { Router } from 'express';
 import multer from 'multer';
+
+import uploadConfig from '@configs/upload';
+import { UsersController } from '@controllers/UsersController';
+import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 
 const usersRoutes = Router();
 
