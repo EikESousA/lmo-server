@@ -1,13 +1,20 @@
-.idea/
-.vscode/
+# Folders
+.vscode
+node_modules
+dist
+coverage
 
-node_modules/
-build/
-coverage/
-
+# Tmps
+!tmp/.gitkeep
 tmp/avatar/*
 !tmp/avatar/.gitkeep
 tmp/products/*
 !tmp/products/.gitkeep
 
+# CONFIGS
+ormconfig.json
 .env
+
+# YARN
+package-lock.json
+yarn.lock

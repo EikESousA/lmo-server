@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "build": "tsc",
     "start": "ts-node src/server.ts",
-    "test": "jest",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:run": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli migration:run",
     "typeorm:revert": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli migration:revert"
   },
@@ -34,6 +34,13 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "@babel/preset-typescript": "^7.16.7",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
@@ -45,6 +52,8 @@
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "^8.3.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
