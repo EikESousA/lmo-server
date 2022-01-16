@@ -1,5 +1,8 @@
 import 'reflect-metadata';
 
+import path from 'path';
+import { inject, injectable } from 'tsyringe';
+
 import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
@@ -7,8 +10,6 @@ import { IMailProvider } from '@providers/interfaces/IMailProvider';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
-import path from 'path';
-import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
 	name: string;

@@ -12,3 +12,7 @@
 -- yarn typeorm:run
 -- yarn typeorm:revert
 -- yarn typeorm migration:create -n <nameFile>
+
+## Lib
+
+-- yarn upgrade-interactive --latest

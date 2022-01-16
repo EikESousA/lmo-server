@@ -1,3 +1,7 @@
+import { instanceToPlain } from 'class-transformer';
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+
 import { AppError } from '@errors/AppError';
 import { AvatarService } from '@services/users/AvatarService';
 import { CreateService } from '@services/users/CreateService';
@@ -6,9 +10,6 @@ import { ResetService } from '@services/users/ResetService';
 import { SessionService } from '@services/users/SessionService';
 import { ShowService } from '@services/users/ShowService';
 import { UpdateService } from '@services/users/UpdateService';
-import { instanceToPlain } from 'class-transformer';
-import { Request, Response } from 'express';
-import { container } from 'tsyringe';
 
 class UsersController {
 	public async avatar(request: Request, response: Response): Promise<Response> {
