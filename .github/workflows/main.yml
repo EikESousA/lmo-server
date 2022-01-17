@@ -17,7 +17,7 @@ jobs:
       - name: Setup Nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
           
       - name: Install Dependencies
         run: yarn
@@ -35,17 +35,3 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: "., !node_modules"
           target: "~/app/luar-server"
-          
-      - name: Update API
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          script: |
-            cd ~/app/api-rentx
-            yarn
-            ./node_modules/.bin/typeorm migration:run
-            pm2 restart luar-node
