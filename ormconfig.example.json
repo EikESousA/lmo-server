@@ -7,8 +7,8 @@
   "database": "luar",
 	"synchronize": true,
   "logging": false,
-  "migrations": ["./**/databases/migrations/*.{ts,js}"],
-  "entities": ["./**/entities/*.{ts,js}"],
+  "migrations": ["./dist/databases/migrations/*.{ts,js}"],
+  "entities": ["./dist/entities/*.{ts,js}"],
   "cli": {
     "migrationsDir": "./dist/databases/migrations"
   }
