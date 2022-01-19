@@ -1,12 +1,7 @@
-import { Connection, createConnection, getConnectionOptions } from 'typeorm';
+import { Connection, createConnection } from 'typeorm';
+
+import databaseConfig from '@configs/database';
 
 export default async (): Promise<Connection> => {
-	const defaultOptions = await getConnectionOptions();
-
-	return createConnection(
-		Object.assign(defaultOptions, {
-			database:
-				process.env.NODE_ENV === 'test' ? 'luar_test' : defaultOptions.database,
-		}),
-	);
+	return createConnection(databaseConfig);
 };
