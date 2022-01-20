@@ -1,14 +1,11 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 
+import { testRoutes } from './test.routes';
 import { usersRoutes } from './users.routes';
 
 const routes = Router();
 
 routes.use('/users', usersRoutes);
-
-routes.get('/test', (request: Request, response: Response) => {
-	console.log('TESTE');
-	response.json({ text: 'hello word' });
-});
+routes.use('/test', testRoutes);
 
 export { routes };

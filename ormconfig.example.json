@@ -1,10 +1,10 @@
 {
-  "username": "docker",
-  "password": "luar",
   "type": "postgres",
   "port": 5432,
   "host": "localhost",
-  "database": "luar-dev",
+  "username": "docker",
+  "password": "luar",
+  "database": "luar",
 	"synchronize": true,
   "logging": false,
   "migrations": ["./dist/databases/migrations/*.{ts,js}"],

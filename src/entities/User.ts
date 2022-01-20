@@ -30,14 +30,19 @@ class User {
 	@Column({ default: null, nullable: true })
 	avatar: string;
 
-	@Column({ default: 1 })
-	level: number;
+	@Column({ default: false })
+	activate: boolean;
+
+	@Column({ default: 2 })
+	level: number; // {0: admin, 1:manager, 2:user}
 
 	@CreateDateColumn()
 	created_at: Date;
 
 	@UpdateDateColumn()
 	updated_at: Date;
+
+	avatar_url?: string;
 
 	@Expose({ name: 'avatar_url' })
 	getAvatar_URL(): string | null {
@@ -47,7 +52,7 @@ class User {
 
 		switch (uploadConfig.driver) {
 			case 'disk':
-				return `${process.env.APP_API_URL}/files/${this.avatar}`;
+				return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
 			case 's3':
 				return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.avatar}`;
 			default:

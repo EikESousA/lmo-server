@@ -11,15 +11,15 @@ import { log } from '@utils/log';
 
 interface IRequest {
 	token: string;
-	password: string;
 }
 
 interface IResponse {
 	data: null;
 	message: string;
 }
+
 @injectable()
-class ResetService {
+class ActivateService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
@@ -29,10 +29,10 @@ class ResetService {
 		private hashProvider: IHashProvider,
 	) {}
 
-	public async execute({ token, password }: IRequest): Promise<IResponse> {
+	public async execute({ token }: IRequest): Promise<IResponse> {
 		const userToken = await this.usersTokensRepository.findByToken(token);
 
-		if (!userToken) {
+		if (!userToken || userToken.info === 0) {
 			log(`❌ Token incorreto`);
 			throw new AppError('Token do usuário incorreto!');
 		}
@@ -45,23 +45,22 @@ class ResetService {
 		}
 
 		const tokenCreatedAt = userToken.created_at;
-		const compareDate = addHours(tokenCreatedAt, 2);
+		const compareDate = addHours(tokenCreatedAt, 24);
 
 		if (isAfter(Date.now(), compareDate)) {
 			log(`❌ Token expirado`);
 			throw new AppError('Token expirado!');
 		}
 
-		user.password = await this.hashProvider.generateHash(password);
-
-		log(`🧑 Usuário resetou senha - EMAIL: ${user.email}`);
+		user.activate = true;
 
 		await this.usersRepository.save(user);
-
 		await this.usersTokensRepository.deleteUserToken(userToken);
 
-		return { data: null, message: 'Senha alterada com sucesso!' };
+		log(`🧑 Usuário ativado - EMAIL: ${user.email}`);
+
+		return { data: null, message: 'Usuário ativado com sucesso!' };
 	}
 }
 
-export { ResetService };
+export { ActivateService };
