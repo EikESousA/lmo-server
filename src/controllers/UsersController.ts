@@ -2,7 +2,7 @@ import { instanceToPlain } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
+import { ActivateService } from '@services/users/ActivateService';
 import { AvatarService } from '@services/users/AvatarService';
 import { CreateService } from '@services/users/CreateService';
 import { ForgotService } from '@services/users/ForgotService';
@@ -17,22 +17,13 @@ class UsersController {
 		const avatarFileName = request.file?.filename;
 
 		if (avatarFileName) {
-			try {
-				const avatarService = container.resolve(AvatarService);
+			const avatarService = container.resolve(AvatarService);
 
-				const user = await avatarService.execute({
-					userId,
-					avatarFileName,
-				});
-				return response.json(user);
-			} catch (error) {
-				if (error instanceof AppError) {
-					return response
-						.status(error.statusCode)
-						.json({ error: error.message });
-				}
-				return response.json(error);
-			}
+			const dataService = await avatarService.execute({
+				userId,
+				avatarFileName,
+			});
+			return response.json(dataService);
 		}
 
 		return response.status(400).send();
@@ -41,62 +32,40 @@ class UsersController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const { name, email, password } = request.body;
 
-		try {
-			const createService = container.resolve(CreateService);
+		const createService = container.resolve(CreateService);
 
-			const user = await createService.execute({
-				name,
-				email,
-				password,
-			});
+		const dataService = await createService.execute({
+			name,
+			email,
+			password,
+		});
 
-			return response.json(instanceToPlain(user));
-		} catch (error) {
-			console.error(error);
-			const logError = error as AppError;
-			return response
-				.status(logError.statusCode)
-				.json({ error: logError.message });
-		}
+		return response.json(instanceToPlain(dataService));
 	}
 
 	public async forgot(request: Request, response: Response): Promise<Response> {
 		const { email } = request.body;
 
-		try {
-			const forgotService = container.resolve(ForgotService);
+		const forgotService = container.resolve(ForgotService);
 
-			await forgotService.execute({
-				email,
-			});
+		const dataService = await forgotService.execute({
+			email,
+		});
 
-			return response.status(204).json();
-		} catch (error) {
-			if (error instanceof AppError) {
-				return response.status(error.statusCode).json({ error: error.message });
-			}
-			return response.json(error);
-		}
+		return response.json(dataService);
 	}
 
 	public async reset(request: Request, response: Response): Promise<Response> {
 		const { token, password } = request.body;
 
-		try {
-			const resetService = container.resolve(ResetService);
+		const resetService = container.resolve(ResetService);
 
-			await resetService.execute({
-				token,
-				password,
-			});
+		const dataService = await resetService.execute({
+			token,
+			password,
+		});
 
-			return response.status(204).json();
-		} catch (error) {
-			if (error instanceof AppError) {
-				return response.status(error.statusCode).json({ error: error.message });
-			}
-			return response.json(error);
-		}
+		return response.json(dataService);
 	}
 
 	public async session(
@@ -105,64 +74,58 @@ class UsersController {
 	): Promise<Response> {
 		const { email, password } = request.body;
 
-		try {
-			const sessionService = container.resolve(SessionService);
+		const sessionService = container.resolve(SessionService);
 
-			const { user, token } = await sessionService.execute({
-				email,
-				password,
-			});
+		const dataService = await sessionService.execute({
+			email,
+			password,
+		});
 
-			return response.json({ user, token });
-		} catch (error) {
-			if (error instanceof AppError) {
-				return response.status(error.statusCode).json({ error: error.message });
-			}
-			return response.json(error);
-		}
+		return response.json(dataService);
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {
 		const userId = request.user.id;
 
-		try {
-			const showService = container.resolve(ShowService);
+		const showService = container.resolve(ShowService);
 
-			const user = await showService.execute({
-				userId,
-			});
+		const dataService = await showService.execute({
+			userId,
+		});
 
-			return response.status(200).json({ user });
-		} catch (error) {
-			if (error instanceof AppError) {
-				return response.status(error.statusCode).json({ error: error.message });
-			}
-			return response.json(error);
-		}
+		return response.json(dataService);
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const userId = request.user.id;
 		const { name, email, oldPassword, password } = request.body;
 
-		try {
-			const updateService = container.resolve(UpdateService);
+		const updateService = container.resolve(UpdateService);
 
-			const user = await updateService.execute({
-				userId,
-				name,
-				email,
-				oldPassword,
-				password,
-			});
+		const dataService = await updateService.execute({
+			userId,
+			name,
+			email,
+			oldPassword,
+			password,
+		});
 
-			return response.status(204).json({ user });
-		} catch (error) {
-			if (error instanceof AppError) {
-				return response.status(error.statusCode).json({ error: error.message });
-			}
-			return response.json(error);
-		}
+		return response.json(dataService);
+	}
+
+	public async activate(
+		request: Request,
+		response: Response,
+	): Promise<Response> {
+		const { token } = request.body;
+
+		const activateService = container.resolve(ActivateService);
+
+		const dataService = await activateService.execute({
+			token,
+		});
+
+		return response.json(dataService);
 	}
 }
 

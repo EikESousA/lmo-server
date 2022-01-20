@@ -8,17 +8,14 @@ import '@repositories/index';
 
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
-import path from 'path';
 
-import uploadConfig from '@configs/upload';
 import createConnection from '@databases/index';
 import { AppError } from '@errors/AppError';
 import rateLimiter from '@middlewares/rateLimiter';
 import { routes } from '@routes/index.routes';
+import { staticRoutes } from '@routes/static.routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
-
-const assetsFolder = path.resolve(__dirname, 'assets');
 
 createConnection();
 
@@ -41,9 +38,7 @@ app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.json());
 
-app.use('/assets', express.static(assetsFolder));
-app.use('/avatar', express.static(`${uploadConfig.tmpFolder}/avatar`));
-app.use('/products', express.static(`${uploadConfig.tmpFolder}/produtos`));
+app.use(staticRoutes);
 
 app.use(cors());
 app.use(routes);
@@ -55,6 +50,7 @@ app.use(
 		if (err instanceof AppError) {
 			return response.status(err.statusCode).json({
 				message: err.message,
+				data: null,
 			});
 		}
 

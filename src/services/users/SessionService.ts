@@ -1,13 +1,14 @@
 import 'reflect-metadata';
 
+import { sign } from 'jsonwebtoken';
+import { inject, injectable } from 'tsyringe';
+
 import authConfig from '@configs/auth';
 import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
-import { sign } from 'jsonwebtoken';
-import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
 	email: string;
@@ -15,8 +16,8 @@ interface IRequest {
 }
 
 interface IResponse {
-	user: User;
-	token: string;
+	data: { user: User; token: string };
+	message: string;
 }
 
 @injectable()
@@ -52,9 +53,17 @@ class SessionService {
 			expiresIn,
 		});
 
+		user.avatar_url = user.getAvatar_URL();
+
+		delete user.password;
+		delete user.avatar;
+		delete user.activate;
+		delete user.created_at;
+		delete user.updated_at;
+
 		log(`🧑 Usuário conectado - EMAIL: ${email}`);
 
-		return { user, token };
+		return { data: { user, token }, message: 'Usuário conectado com sucesso!' };
 	}
 }
 

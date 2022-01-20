@@ -1,6 +1,7 @@
+import { getRepository, Repository } from 'typeorm';
+
 import { UserToken } from '@entities/UserToken';
 import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
-import { getRepository, Repository } from 'typeorm';
 
 class UsersTokenRepository implements IUsersTokenRepository {
 	private repository: Repository<UserToken>;
@@ -18,6 +19,10 @@ class UsersTokenRepository implements IUsersTokenRepository {
 	public async findByToken(token: string): Promise<UserToken | undefined> {
 		const userToken = await this.repository.findOne({ where: { token } });
 		return userToken;
+	}
+
+	public async deleteUserToken(userToken: UserToken): Promise<void> {
+		await this.repository.remove(userToken);
 	}
 }
 

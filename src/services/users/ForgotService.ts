@@ -1,14 +1,20 @@
 import 'reflect-metadata';
+import path from 'path';
+import { inject, injectable } from 'tsyringe';
+
 import { AppError } from '@errors/AppError';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
-import path from 'path';
-import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
 	email: string;
+}
+
+interface IResponse {
+	data: null;
+	message: string;
 }
 
 @injectable()
@@ -22,7 +28,7 @@ class ForgotService {
 		private mailProvider: IMailProvider,
 	) {}
 
-	public async execute({ email }: IRequest): Promise<void> {
+	public async execute({ email }: IRequest): Promise<IResponse> {
 		const user = await this.usersRepository.findByEmail(email);
 
 		if (!user) {
@@ -57,6 +63,12 @@ class ForgotService {
 		});
 
 		log(`🧑 Usuário esqueceu senha - EMAIL: ${email}`);
+
+		return {
+			data: null,
+			message:
+				'Por favor acesse seu e-mail e siga as instruções para recuperar a senha!',
+		};
 	}
 }
 

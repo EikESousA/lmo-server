@@ -18,13 +18,13 @@ export default async function rateLimiter(
 		storeClient: redisClient,
 		keyPrefix: 'rateLimiter',
 		points: 5,
-		duration: 5,
+		duration: 1,
 	});
 	try {
 		await limiter.consume(request.ip);
 
 		return next();
 	} catch (err) {
-		throw new AppError('Too many requests', 429);
+		throw new AppError('Muitas requisições', 429);
 	}
 }

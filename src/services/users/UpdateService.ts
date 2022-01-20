@@ -1,11 +1,12 @@
 import 'reflect-metadata';
 
+import { inject, injectable } from 'tsyringe';
+
 import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
-import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
 	userId: string;
@@ -13,6 +14,11 @@ interface IRequest {
 	email: string;
 	password?: string;
 	oldPassword?: string;
+}
+
+interface IResponse {
+	data: User;
+	message: string;
 }
 
 @injectable()
@@ -30,7 +36,7 @@ class UpdateService {
 		email,
 		password,
 		oldPassword,
-	}: IRequest): Promise<User> {
+	}: IRequest): Promise<IResponse> {
 		const user = await this.usersRepository.findById(userId);
 
 		if (!user) {
@@ -69,9 +75,19 @@ class UpdateService {
 			user.password = await this.hashProvider.generateHash(password);
 		}
 
+		this.usersRepository.save(user);
+
+		user.avatar_url = user.getAvatar_URL();
+
+		delete user.password;
+		delete user.avatar;
+		delete user.activate;
+		delete user.created_at;
+		delete user.updated_at;
+
 		log(`🧑 Usuário atualizado - EMAIL: ${email}`);
 
-		return this.usersRepository.save(user);
+		return { data: user, message: 'Usuário atualizado com sucesso!' };
 	}
 }
 

@@ -10,7 +10,7 @@ services:
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=luar
-      - POSTGRES_DB=luar-dev
+      - POSTGRES_DB=luar
     volumes:
       - pgdata:/data/postgres
 

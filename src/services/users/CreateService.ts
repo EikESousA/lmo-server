@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import path from 'path';
 import { inject, injectable } from 'tsyringe';
 
-import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
@@ -15,6 +14,11 @@ interface IRequest {
 	name: string;
 	email: string;
 	password: string;
+}
+
+interface IResponse {
+	data: null;
+	message: string;
 }
 
 @injectable()
@@ -30,7 +34,11 @@ class CreateService {
 		private mailProvider: IMailProvider,
 	) {}
 
-	public async execute({ name, email, password }: IRequest): Promise<User> {
+	public async execute({
+		name,
+		email,
+		password,
+	}: IRequest): Promise<IResponse> {
 		const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
 		if (userAlreadyExists) {
@@ -74,7 +82,7 @@ class CreateService {
 
 		log(`🧑 Usuário criado - EMAIL: ${email}`);
 
-		return user;
+		return { data: null, message: 'Usuário criado com sucesso!' };
 	}
 }
 
