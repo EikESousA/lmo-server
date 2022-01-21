@@ -9,7 +9,7 @@ import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
-	userId: string;
+	id: string;
 }
 
 interface IResponse {
@@ -26,8 +26,11 @@ class ShowService {
 		private hashProvider: IHashProvider,
 	) {}
 
-	public async execute({ userId }: IRequest): Promise<IResponse> {
-		const user = await this.usersRepository.findById(userId);
+	public async execute({ id }: IRequest): Promise<IResponse> {
+		const user = await this.usersRepository.findById({
+			id,
+			select: ['id', 'name', 'email', 'phone', 'avatar', 'level', 'activate'],
+		});
 
 		if (!user) {
 			log(`❌ Usuário não existe`);
@@ -36,11 +39,7 @@ class ShowService {
 
 		user.avatar_url = user.getAvatar_URL();
 
-		delete user.password;
 		delete user.avatar;
-		delete user.activate;
-		delete user.created_at;
-		delete user.updated_at;
 
 		log(`🧑 Usuário encontrado - EMAIL: ${user.email}`);
 

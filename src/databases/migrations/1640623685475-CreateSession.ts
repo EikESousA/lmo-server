@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUser1640306433976 implements MigrationInterface {
+export class CreateSession1640623685475 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'user',
+				name: 'session',
 				columns: [
 					{
 						name: 'id',
@@ -14,36 +14,18 @@ export class CreateUser1640306433976 implements MigrationInterface {
 						default: 'uuid_generate_v4()',
 					},
 					{
-						name: 'name',
-						type: 'varchar',
+						name: 'token',
+						type: 'uuid',
+						generationStrategy: 'uuid',
+						default: 'uuid_generate_v4()',
 					},
 					{
-						name: 'email',
-						type: 'varchar',
+						name: 'user_id',
+						type: 'uuid',
 					},
 					{
-						name: 'password',
-						type: 'varchar',
-					},
-					{
-						name: 'phone',
-						type: 'varchar',
-						isNullable: true,
-					},
-					{
-						name: 'avatar',
-						type: 'varchar',
-						isNullable: true,
-					},
-					{
-						name: 'level',
+						name: 'info',
 						type: 'int',
-						default: '2',
-					},
-					{
-						name: 'activate',
-						type: 'boolean',
-						default: 'false',
 					},
 					{
 						name: 'created_at',
@@ -56,11 +38,21 @@ export class CreateUser1640306433976 implements MigrationInterface {
 						default: 'now()',
 					},
 				],
+				foreignKeys: [
+					{
+						name: 'Session',
+						referencedTableName: 'user',
+						referencedColumnNames: ['id'],
+						columnNames: ['user_id'],
+						onDelete: 'CASCADE',
+						onUpdate: 'CASCADE',
+					},
+				],
 			}),
 		);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('user');
+		await queryRunner.dropTable('session');
 	}
 }

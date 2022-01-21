@@ -11,7 +11,7 @@ export async function ensureAdmin(
 	const { id } = request.user;
 
 	const usersRepository = new UsersRepository();
-	const user = await usersRepository.findById(id);
+	const user = await usersRepository.findById({ id });
 
 	if (user.level !== 0) {
 		throw new AppError('Usuário não é admnistrador');

@@ -18,6 +18,7 @@
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
+      "@validators/*": ["validators/*"],
       "@views/*": ["views/*"]
     },
     "esModuleInterop": true,

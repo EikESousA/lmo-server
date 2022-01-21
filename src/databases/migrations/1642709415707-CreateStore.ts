@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUserToken1640623685475 implements MigrationInterface {
+export class CreateStore1642709415707 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'user_token',
+				name: 'store',
 				columns: [
 					{
 						name: 'id',
@@ -14,18 +14,48 @@ export class CreateUserToken1640623685475 implements MigrationInterface {
 						default: 'uuid_generate_v4()',
 					},
 					{
-						name: 'token',
-						type: 'uuid',
-						generationStrategy: 'uuid',
-						default: 'uuid_generate_v4()',
-					},
-					{
 						name: 'user_id',
 						type: 'uuid',
+						isNullable: true,
 					},
 					{
-						name: 'info',
-						type: 'int',
+						name: 'name',
+						type: 'varchar',
+					},
+					{
+						name: 'cnpj',
+						type: 'varchar',
+						isNullable: true,
+					},
+					{
+						name: 'instagram',
+						type: 'varchar',
+						isNullable: true,
+					},
+					{
+						name: 'facebook',
+						type: 'varchar',
+						isNullable: true,
+					},
+					{
+						name: 'address',
+						type: 'varchar',
+						isNullable: true,
+					},
+					{
+						name: 'phone',
+						type: 'varchar',
+						isNullable: true,
+					},
+					{
+						name: 'avatar',
+						type: 'varchar',
+						isNullable: true,
+					},
+					{
+						name: 'activate',
+						type: 'boolean',
+						default: 'true',
 					},
 					{
 						name: 'created_at',
@@ -40,7 +70,7 @@ export class CreateUserToken1640623685475 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'TokenUser',
+						name: 'Store',
 						referencedTableName: 'user',
 						referencedColumnNames: ['id'],
 						columnNames: ['user_id'],
@@ -53,6 +83,6 @@ export class CreateUserToken1640623685475 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('user_token');
+		await queryRunner.dropTable('store');
 	}
 }

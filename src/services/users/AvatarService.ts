@@ -9,7 +9,7 @@ import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
-	userId: string;
+	id: string;
 	avatarFileName: string;
 }
 
@@ -27,11 +27,11 @@ class AvatarService {
 		private storageProvider: IStorageProvider,
 	) {}
 
-	public async execute({
-		userId,
-		avatarFileName,
-	}: IRequest): Promise<IResponse> {
-		const user = await this.usersRepository.findById(userId);
+	public async execute({ id, avatarFileName }: IRequest): Promise<IResponse> {
+		const user = await this.usersRepository.findById({
+			id,
+			select: ['id', 'name', 'email', 'phone', 'avatar', 'level', 'activate'],
+		});
 
 		if (!user) {
 			log(`❌ Usuário não autenticado`);
@@ -44,7 +44,7 @@ class AvatarService {
 
 		const filename = await this.storageProvider.saveFile(
 			avatarFileName,
-			'avatar',
+			'user',
 		);
 
 		user.avatar = filename;
@@ -53,11 +53,7 @@ class AvatarService {
 
 		user.avatar_url = user.getAvatar_URL();
 
-		delete user.password;
 		delete user.avatar;
-		delete user.activate;
-		delete user.created_at;
-		delete user.updated_at;
 
 		log(`🧑 Usuário alterou avatar - EMAIL: ${user.email}`);
 
