@@ -21,6 +21,11 @@ interface IFindByIdDTO {
 	select?: (keyof Store)[];
 }
 
+interface IFindByUserIdDTO {
+	id: string;
+	select?: (keyof Store)[];
+}
+
 interface IFindAllStoresDTO {
 	select?: (keyof Store)[];
 }
@@ -40,6 +45,7 @@ interface IStoresRepository {
 	delete(store: Store): Promise<void>;
 	findByEmail({ email, select }: IFindByEmailDTO): Promise<Store | undefined>;
 	findById({ id, select }: IFindByIdDTO): Promise<Store | undefined>;
+	findByUserId({ id, select }: IFindByUserIdDTO): Promise<Store | undefined>;
 	findAllStores({ select }: IFindAllStoresDTO): Promise<Store[] | undefined>;
 }
 
@@ -48,5 +54,6 @@ export {
 	ICreateStoreDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
+	IFindByUserIdDTO,
 	IFindAllStoresDTO,
 };
