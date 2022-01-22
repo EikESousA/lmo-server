@@ -4,6 +4,7 @@ import {
 	IFindAllStoresDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
+	IFindByUserIdDTO,
 	IStoresRepository,
 } from '@repositories/interfaces/IStoresRepository';
 
@@ -80,6 +81,19 @@ class StoresRepository implements IStoresRepository {
 		select,
 	}: IFindByIdDTO): Promise<Store | undefined> {
 		const store = this.stores.find(findStore => findStore.id === id);
+
+		select.forEach(atribute => {
+			delete store[atribute];
+		});
+
+		return store;
+	}
+
+	public async findByUserId({
+		id,
+		select,
+	}: IFindByUserIdDTO): Promise<Store | undefined> {
+		const store = this.stores.find(findStore => findStore.user_id === id);
 
 		select.forEach(atribute => {
 			delete store[atribute];

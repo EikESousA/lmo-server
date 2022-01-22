@@ -4,9 +4,11 @@ import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
 import authConfig from '@configs/auth';
+import { Store } from '@entities/Store';
 import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { IStoresRepository } from '@repositories/interfaces/IStoresRepository';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
@@ -16,7 +18,7 @@ interface IRequest {
 }
 
 interface IResponse {
-	data: { user: User; token: string };
+	data: { user: User; token: string; store: Store | undefined };
 	message: string;
 }
 
@@ -27,6 +29,8 @@ class SessionService {
 		private usersRepository: IUsersRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
+		@inject('StoresRepository')
+		private storesRepository: IStoresRepository,
 	) {}
 
 	public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -71,9 +75,14 @@ class SessionService {
 		delete user.avatar;
 		delete user.password;
 
+		const store = await this.storesRepository.findByUserId({ id: user.id });
+
 		log(`🧑 Usuário conectado - EMAIL: ${email}`);
 
-		return { data: { user, token }, message: 'Usuário conectado com sucesso!' };
+		return {
+			data: { user, token, store },
+			message: 'Usuário conectado com sucesso!',
+		};
 	}
 }
 

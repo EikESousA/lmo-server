@@ -6,6 +6,7 @@ import {
 	IFindAllStoresDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
+	IFindByUserIdDTO,
 	IStoresRepository,
 } from '@repositories/interfaces/IStoresRepository';
 
@@ -62,6 +63,18 @@ class StoresRepository implements IStoresRepository {
 		select,
 	}: IFindByIdDTO): Promise<Store | undefined> {
 		const store = await this.repository.findOne({ where: { id }, select });
+
+		return store;
+	}
+
+	public async findByUserId({
+		id,
+		select,
+	}: IFindByUserIdDTO): Promise<Store | undefined> {
+		const store = await this.repository.findOne({
+			where: { user_id: id },
+			select,
+		});
 
 		return store;
 	}
