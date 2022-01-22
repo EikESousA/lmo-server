@@ -1,16 +1,24 @@
 import { container } from 'tsyringe';
 
+import { SessionsRepository } from '@repositories/implementations/SessionsRepository';
 import { UsersRepository } from '@repositories/implementations/UsersRepository';
-import { UsersTokenRepository } from '@repositories/implementations/UsersTokenRepository';
+import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
-import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
+
+import { StoresRepository } from './implementations/StoresRepository';
+import { IStoresRepository } from './interfaces/IStoresRepository';
 
 container.registerSingleton<IUsersRepository>(
 	'UsersRepository',
 	UsersRepository,
 );
 
-container.registerSingleton<IUsersTokenRepository>(
-	'UsersTokenRepository',
-	UsersTokenRepository,
+container.registerSingleton<ISessionsRepository>(
+	'SessionsRepository',
+	SessionsRepository,
+);
+
+container.registerSingleton<IStoresRepository>(
+	'StoresRepository',
+	StoresRepository,
 );

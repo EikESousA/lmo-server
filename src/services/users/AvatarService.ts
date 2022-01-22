@@ -2,19 +2,18 @@ import 'reflect-metadata';
 
 import { inject, injectable } from 'tsyringe';
 
-import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IStorageProvider } from '@providers/interfaces/IStorageProvider';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
-	userId: string;
-	avatarFileName: string;
+	id: string;
+	fileName: string;
 }
 
 interface IResponse {
-	data: User;
+	data: string;
 	message: string;
 }
 
@@ -27,11 +26,11 @@ class AvatarService {
 		private storageProvider: IStorageProvider,
 	) {}
 
-	public async execute({
-		userId,
-		avatarFileName,
-	}: IRequest): Promise<IResponse> {
-		const user = await this.usersRepository.findById(userId);
+	public async execute({ id, fileName }: IRequest): Promise<IResponse> {
+		const user = await this.usersRepository.findById({
+			id,
+			select: ['id', 'avatar'],
+		});
 
 		if (!user) {
 			log(`❌ Usuário não autenticado`);
@@ -39,13 +38,10 @@ class AvatarService {
 		}
 
 		if (user.avatar) {
-			await this.storageProvider.deleteFile(user.avatar, 'avatar');
+			await this.storageProvider.deleteFile(user.avatar, 'user');
 		}
 
-		const filename = await this.storageProvider.saveFile(
-			avatarFileName,
-			'avatar',
-		);
+		const filename = await this.storageProvider.saveFile(fileName, 'user');
 
 		user.avatar = filename;
 
@@ -53,15 +49,14 @@ class AvatarService {
 
 		user.avatar_url = user.getAvatar_URL();
 
-		delete user.password;
 		delete user.avatar;
-		delete user.activate;
-		delete user.created_at;
-		delete user.updated_at;
 
 		log(`🧑 Usuário alterou avatar - EMAIL: ${user.email}`);
 
-		return { data: user, message: 'Avatar do usuário alterao com sucesso!' };
+		return {
+			data: user.avatar_url,
+			message: 'Avatar do usuário alterado com sucesso!',
+		};
 	}
 }
 

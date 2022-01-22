@@ -8,18 +8,38 @@ interface ICreateUserDTO {
 interface ISessionDTO {
 	email: string;
 	password: string;
+	select?: (keyof User)[];
 }
-interface IFindAllProvidersDTO {
-	except_user_id?: string;
+
+interface IFindByEmailDTO {
+	email: string;
+	select?: (keyof User)[];
+}
+
+interface IFindByIdDTO {
+	id: string;
+	select?: (keyof User)[];
+}
+
+interface IFindAllUsersDTO {
+	id: string;
+	select?: (keyof User)[];
 }
 
 interface IUsersRepository {
 	create({ name, email, password }: ICreateUserDTO): Promise<User>;
 	save(user: User): Promise<User>;
-	session({ email, password }: ISessionDTO): Promise<User | undefined>;
-	findByEmail(email: string): Promise<User | undefined>;
-	findById(id: string): Promise<User | undefined>;
-	findAllProviders(data: IFindAllProvidersDTO): Promise<User[]>;
+	session({ email, password, select }: ISessionDTO): Promise<User | undefined>;
+	findByEmail({ email, select }: IFindByEmailDTO): Promise<User | undefined>;
+	findById({ id, select }: IFindByIdDTO): Promise<User | undefined>;
+	findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]>;
 }
 
-export { IUsersRepository, ICreateUserDTO, ISessionDTO, IFindAllProvidersDTO };
+export {
+	IUsersRepository,
+	ICreateUserDTO,
+	ISessionDTO,
+	IFindByEmailDTO,
+	IFindByIdDTO,
+	IFindAllUsersDTO,
+};

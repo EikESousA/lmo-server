@@ -7,8 +7,8 @@ import {
 	Generated,
 } from 'typeorm';
 
-@Entity('user_token')
-class UserToken {
+@Entity('session')
+class Session {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
@@ -29,4 +29,4 @@ class UserToken {
 	updated_at?: Date;
 }
 
-export { UserToken };
+export { Session };

@@ -6,11 +6,13 @@ import uploadConfig from '@configs/upload';
 const staticRoutes = Router();
 
 const assetsFolder = path.resolve(__dirname, 'assets');
-const avatarFolder = path.join(uploadConfig.tmpFolder, 'avatar');
-const productsFolder = path.join(uploadConfig.tmpFolder, 'products');
+const userFolder = path.join(uploadConfig.tmpFolder, 'user');
+const productFolder = path.join(uploadConfig.tmpFolder, 'product');
+const storeFolder = path.join(uploadConfig.tmpFolder, 'store');
 
 staticRoutes.use('/assets', express.static(assetsFolder));
-staticRoutes.use('/avatar', express.static(avatarFolder));
-staticRoutes.use('/products', express.static(productsFolder));
+staticRoutes.use('/user', express.static(userFolder));
+staticRoutes.use('/product', express.static(productFolder));
+staticRoutes.use('/store', express.static(storeFolder));
 
 export { staticRoutes };

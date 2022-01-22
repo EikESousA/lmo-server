@@ -5,8 +5,8 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
+import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
-import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
@@ -23,28 +23,28 @@ class ActivateService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
-		@inject('UsersTokenRepository')
-		private usersTokensRepository: IUsersTokenRepository,
+		@inject('SessionsRepository')
+		private sessionsRepository: ISessionsRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 	) {}
 
 	public async execute({ token }: IRequest): Promise<IResponse> {
-		const userToken = await this.usersTokensRepository.findByToken(token);
+		const sessions = await this.sessionsRepository.findByToken(token);
 
-		if (!userToken || userToken.info === 0) {
+		if (!sessions || sessions.info === 0) {
 			log(`❌ Token incorreto`);
 			throw new AppError('Token do usuário incorreto!');
 		}
 
-		const user = await this.usersRepository.findById(userToken.user_id);
+		const user = await this.usersRepository.findById({ id: sessions.user_id });
 
 		if (!user) {
 			log(`❌ Usuário não existe`);
 			throw new AppError('Usuário não existe!');
 		}
 
-		const tokenCreatedAt = userToken.created_at;
+		const tokenCreatedAt = sessions.created_at;
 		const compareDate = addHours(tokenCreatedAt, 24);
 
 		if (isAfter(Date.now(), compareDate)) {
@@ -55,7 +55,7 @@ class ActivateService {
 		user.activate = true;
 
 		await this.usersRepository.save(user);
-		await this.usersTokensRepository.deleteUserToken(userToken);
+		await this.sessionsRepository.delete(sessions);
 
 		log(`🧑 Usuário ativado - EMAIL: ${user.email}`);
 

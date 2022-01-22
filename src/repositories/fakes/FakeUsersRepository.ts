@@ -3,7 +3,9 @@ import {
 	IUsersRepository,
 	ICreateUserDTO,
 	ISessionDTO,
-	IFindAllProvidersDTO,
+	IFindByEmailDTO,
+	IFindByIdDTO,
+	IFindAllUsersDTO,
 } from '@repositories/interfaces/IUsersRepository';
 
 class FakeUsersRepository implements IUsersRepository {
@@ -37,41 +39,64 @@ class FakeUsersRepository implements IUsersRepository {
 
 	public async save(user: User): Promise<User> {
 		const findIndex = this.users.findIndex(findUser => findUser.id === user.id);
+
 		this.users[findIndex] = user;
+
 		return user;
 	}
 
 	public async session({
 		email,
 		password,
+		select,
 	}: ISessionDTO): Promise<User | undefined> {
 		const user = this.users.find(
 			findUser => findUser.email === email && findUser.password === password,
 		);
 
+		select.forEach(atribute => {
+			delete user[atribute];
+		});
+
 		return user;
 	}
 
-	public async findByEmail(email: string): Promise<User | undefined> {
+	public async findByEmail({
+		email,
+		select,
+	}: IFindByEmailDTO): Promise<User | undefined> {
 		const user = this.users.find(findUser => findUser.email === email);
 
+		select.forEach(atribute => {
+			delete user[atribute];
+		});
+
 		return user;
 	}
 
-	public async findById(id: string): Promise<User | undefined> {
+	public async findById({
+		id,
+		select,
+	}: IFindByIdDTO): Promise<User | undefined> {
 		const user = this.users.find(findUser => findUser.id === id);
+
+		select.forEach(atribute => {
+			delete user[atribute];
+		});
+
 		return user;
 	}
 
-	public async findAllProviders({
-		except_user_id,
-	}: IFindAllProvidersDTO): Promise<User[]> {
-		let all_users = this.users;
-		if (except_user_id) {
-			all_users = this.users.filter(
-				filterUser => filterUser.id !== except_user_id,
-			);
-		}
+	public async findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]> {
+		const all_users = this.users.filter(filterUser => filterUser.id !== id);
+
+		all_users.forEach(user => {
+			select.forEach(atribute => {
+				// eslint-disable-next-line no-param-reassign
+				delete user[atribute];
+			});
+		});
+
 		return all_users;
 	}
 }

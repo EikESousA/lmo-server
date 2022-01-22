@@ -30,7 +30,20 @@ class SessionService {
 	) {}
 
 	public async execute({ email, password }: IRequest): Promise<IResponse> {
-		const user = await this.usersRepository.findByEmail(email);
+		const user = await this.usersRepository.findByEmail({
+			email,
+			select: [
+				'id',
+				'name',
+				'password',
+				'email',
+				'phone',
+				'avatar',
+				'level',
+				'activate',
+			],
+		});
+
 		if (!user) {
 			log(`❌ Usuário incorreto - EMAIL: ${email}`);
 			throw new AppError('Usuário ou e-mail incorreto!', 401);
@@ -55,11 +68,8 @@ class SessionService {
 
 		user.avatar_url = user.getAvatar_URL();
 
-		delete user.password;
 		delete user.avatar;
-		delete user.activate;
-		delete user.created_at;
-		delete user.updated_at;
+		delete user.password;
 
 		log(`🧑 Usuário conectado - EMAIL: ${email}`);
 

@@ -9,9 +9,10 @@ import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
-	userId: string;
-	name: string;
-	email: string;
+	id: string;
+	name?: string;
+	email?: string;
+	phone?: string;
 	password?: string;
 	oldPassword?: string;
 }
@@ -31,34 +32,57 @@ class UpdateService {
 	) {}
 
 	public async execute({
-		userId,
+		id,
 		name,
 		email,
+		phone,
 		password,
 		oldPassword,
 	}: IRequest): Promise<IResponse> {
-		const user = await this.usersRepository.findById(userId);
+		const user = await this.usersRepository.findById({
+			id,
+			select: [
+				'id',
+				'name',
+				'email',
+				'phone',
+				'avatar',
+				'level',
+				'activate',
+				'password',
+			],
+		});
 
 		if (!user) {
 			log(`❌ Usuário não autenticado`);
 			throw new AppError('Usuário não autenticado!');
 		}
 
-		const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
-
-		if (userWithUpdatedEmail && userWithUpdatedEmail.id !== userId) {
-			log(`❌ E-mail utilizado`);
-			throw new AppError('E-mail já está sendo utilizado!');
+		if (name) {
+			user.name = name;
 		}
 
-		user.name = name;
-		user.email = email;
+		if (email) {
+			const userWithUpdatedEmail = await this.usersRepository.findByEmail({
+				email,
+			});
+
+			if (userWithUpdatedEmail && userWithUpdatedEmail.id !== id) {
+				log(`❌ E-mail utilizado`);
+				throw new AppError('E-mail já está sendo utilizado!');
+			}
+			user.email = email;
+		}
 
 		if (password && !oldPassword) {
 			log(`❌ Antiga senha vazia`);
 			throw new AppError(
 				'Você precisa informar a antiga senha para ser alterado!',
 			);
+		}
+
+		if (phone) {
+			user.phone = phone;
 		}
 
 		if (password && oldPassword) {
@@ -81,9 +105,6 @@ class UpdateService {
 
 		delete user.password;
 		delete user.avatar;
-		delete user.activate;
-		delete user.created_at;
-		delete user.updated_at;
 
 		log(`🧑 Usuário atualizado - EMAIL: ${email}`);
 

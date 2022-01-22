@@ -6,8 +6,8 @@ import { inject, injectable } from 'tsyringe';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
+import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
 import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
-import { IUsersTokenRepository } from '@repositories/interfaces/IUsersTokenRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
@@ -28,8 +28,8 @@ class CreateService {
 		private usersRepository: IUsersRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
-		@inject('UsersTokenRepository')
-		private usersTokenRepository: IUsersTokenRepository,
+		@inject('SessionsRepository')
+		private sessionsRepository: ISessionsRepository,
 		@inject('MailProvider')
 		private mailProvider: IMailProvider,
 	) {}
@@ -39,7 +39,10 @@ class CreateService {
 		email,
 		password,
 	}: IRequest): Promise<IResponse> {
-		const userAlreadyExists = await this.usersRepository.findByEmail(email);
+		const userAlreadyExists = await this.usersRepository.findByEmail({
+			email,
+			select: ['id'],
+		});
 
 		if (userAlreadyExists) {
 			log(`❌ Usuário já existe - EMAIL: ${email}`);
@@ -54,7 +57,7 @@ class CreateService {
 			password: hashedPassword,
 		});
 
-		const userToken = await this.usersTokenRepository.generate(user.id, 1);
+		const session = await this.sessionsRepository.create(user.id, 1);
 
 		const createTemplateDir = path.resolve(
 			__dirname,
@@ -75,14 +78,18 @@ class CreateService {
 				variables: {
 					image: `https://luar-roupaseacessorios.s3.us-east-2.amazonaws.com/assets/stamp_white.png`,
 					name,
-					link: `${process.env.APP_WEB_URL}/usuario/confirmar?token=${userToken.token}`,
+					link: `${process.env.APP_WEB_URL}/usuario/confirmar?token=${session.token}`,
 				},
 			},
 		});
 
 		log(`🧑 Usuário criado - EMAIL: ${email}`);
 
-		return { data: null, message: 'Usuário criado com sucesso!' };
+		return {
+			data: null,
+			message:
+				'Usuário criado com sucesso! Por favor verifique sua caixa de e-mail para ativar sua conta.',
+		};
 	}
 }
 

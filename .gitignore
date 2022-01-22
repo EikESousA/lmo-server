@@ -6,10 +6,12 @@ coverage
 
 # Tmps
 !tmp/.gitkeep
-tmp/avatar/*
-!tmp/avatar/.gitkeep
+tmp/user/*
+!tmp/user/.gitkeep
 tmp/products/*
 !tmp/products/.gitkeep
+tmp/store/*
+!tmp/store/.gitkeep
 
 # CONFIGS
 ormconfig.json

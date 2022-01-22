@@ -1,11 +1,14 @@
+import { Repository, getRepository, Not } from 'typeorm';
+
 import { User } from '@entities/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
 	ISessionDTO,
-	IFindAllProvidersDTO,
+	IFindByEmailDTO,
+	IFindByIdDTO,
+	IFindAllUsersDTO,
 } from '@repositories/interfaces/IUsersRepository';
-import { Repository, getRepository, Not } from 'typeorm';
 
 class UsersRepository implements IUsersRepository {
 	private repository: Repository<User>;
@@ -24,7 +27,9 @@ class UsersRepository implements IUsersRepository {
 			email,
 			password,
 		});
+
 		await this.repository.save(user);
+
 		return user;
 	}
 
@@ -35,37 +40,41 @@ class UsersRepository implements IUsersRepository {
 	public async session({
 		email,
 		password,
+		select,
 	}: ISessionDTO): Promise<User | undefined> {
 		const user = await this.repository.findOne({
 			where: { email, password },
+			select,
 		});
+
 		return user;
 	}
 
-	public async findByEmail(email: string): Promise<User | undefined> {
-		const user = await this.repository.findOne({ where: { email } });
+	public async findByEmail({
+		email,
+		select,
+	}: IFindByEmailDTO): Promise<User | undefined> {
+		const user = await this.repository.findOne({ where: { email }, select });
+
 		return user;
 	}
 
-	public async findById(id: string): Promise<User | undefined> {
-		const user = await this.repository.findOne(id);
+	public async findById({
+		id,
+		select,
+	}: IFindByIdDTO): Promise<User | undefined> {
+		const user = await this.repository.findOne({ where: { id }, select });
+
 		return user;
 	}
 
-	public async findAllProviders({
-		except_user_id,
-	}: IFindAllProvidersDTO): Promise<User[]> {
-		let users: User[];
-
-		if (except_user_id) {
-			users = await this.repository.find({
-				where: {
-					id: Not(except_user_id),
-				},
-			});
-		} else {
-			users = await this.repository.find();
-		}
+	public async findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]> {
+		const users = await this.repository.find({
+			where: {
+				id: Not(id),
+			},
+			select,
+		});
 
 		return users;
 	}
