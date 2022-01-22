@@ -115,14 +115,14 @@ class UsersController {
 
 	public async avatar(request: Request, response: Response): Promise<Response> {
 		const { id } = request.user;
-		const avatarFileName = request.file?.filename;
+		const fileName = request.file?.filename;
 
-		if (avatarFileName) {
+		if (fileName) {
 			const avatarService = container.resolve(AvatarService);
 
 			const dataService = await avatarService.execute({
 				id,
-				avatarFileName,
+				fileName,
 			});
 			return response.json(dataService);
 		}

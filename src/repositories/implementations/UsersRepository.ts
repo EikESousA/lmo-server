@@ -7,7 +7,7 @@ import {
 	ISessionDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
-	IFindAllProvidersDTO,
+	IFindAllUsersDTO,
 } from '@repositories/interfaces/IUsersRepository';
 
 class UsersRepository implements IUsersRepository {
@@ -68,10 +68,7 @@ class UsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	public async findAllProviders({
-		id,
-		select,
-	}: IFindAllProvidersDTO): Promise<User[]> {
+	public async findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]> {
 		const users = await this.repository.find({
 			where: {
 				id: Not(id),

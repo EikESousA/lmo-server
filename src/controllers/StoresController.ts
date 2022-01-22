@@ -1,131 +1,119 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { ActivateService } from '@services/users/ActivateService';
-import { AvatarService } from '@services/users/AvatarService';
-import { CreateService } from '@services/users/CreateService';
-import { ForgotService } from '@services/users/ForgotService';
-import { ResetService } from '@services/users/ResetService';
-import { SessionService } from '@services/users/SessionService';
-import { ShowService } from '@services/users/ShowService';
-import { UpdateService } from '@services/users/UpdateService';
+import { AvatarService } from '@services/stores/AvatarService';
+import { CreateService } from '@services/stores/CreateService';
+import { DisableService } from '@services/stores/DisableService';
+import { LinkService } from '@services/stores/LinkService';
+import { ListService } from '@services/stores/ListService';
+import { ShowService } from '@services/stores/ShowService';
+import { UpdateService } from '@services/stores/UpdateService';
 
-class UsersController {
-	public async avatar(request: Request, response: Response): Promise<Response> {
-		const userId = request.user.id;
-		const avatarFileName = request.file?.filename;
-
-		if (avatarFileName) {
-			const avatarService = container.resolve(AvatarService);
-
-			const dataService = await avatarService.execute({
-				userId,
-				avatarFileName,
-			});
-			return response.json(dataService);
-		}
-
-		return response.status(400).send();
-	}
-
+class StoresController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { name, email, password } = request.body;
+		const { name, email, address, phone, instagram, facebook, cnpj } =
+			request.body;
 
 		const createService = container.resolve(CreateService);
 
 		const dataService = await createService.execute({
 			name,
 			email,
-			password,
+			address,
+			phone,
+			instagram,
+			facebook,
+			cnpj,
 		});
 
 		return response.json(dataService);
 	}
 
-	public async forgot(request: Request, response: Response): Promise<Response> {
-		const { email } = request.body;
+	public async list(request: Request, response: Response): Promise<Response> {
+		const listService = container.resolve(ListService);
 
-		const forgotService = container.resolve(ForgotService);
+		const dataService = await listService.execute();
 
-		const dataService = await forgotService.execute({
+		return response.json(dataService);
+	}
+
+	public async update(request: Request, response: Response): Promise<Response> {
+		const { id, name, email, address, cnpj, facebook, instagram, phone } =
+			request.body;
+
+		const updateService = container.resolve(UpdateService);
+
+		const dataService = await updateService.execute({
+			id,
+			name,
 			email,
+			address,
+			cnpj,
+			facebook,
+			instagram,
+			phone,
 		});
 
 		return response.json(dataService);
 	}
 
-	public async reset(request: Request, response: Response): Promise<Response> {
-		const { token, password } = request.body;
+	public async link(request: Request, response: Response): Promise<Response> {
+		const { id, userId } = request.body;
 
-		const resetService = container.resolve(ResetService);
+		const linkService = container.resolve(LinkService);
 
-		const dataService = await resetService.execute({
-			token,
-			password,
+		const dataService = await linkService.execute({
+			id,
+			userId,
 		});
 
 		return response.json(dataService);
 	}
 
-	public async session(
+	public async disable(
 		request: Request,
 		response: Response,
 	): Promise<Response> {
-		const { email, password } = request.body;
+		const { id, activate } = request.body;
 
-		const sessionService = container.resolve(SessionService);
+		const disableService = container.resolve(DisableService);
 
-		const dataService = await sessionService.execute({
-			email,
-			password,
+		const dataService = await disableService.execute({
+			id,
+			activate,
 		});
 
 		return response.json(dataService);
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {
-		const userId = request.user.id;
+		const { id } = request.body;
 
 		const showService = container.resolve(ShowService);
 
 		const dataService = await showService.execute({
-			userId,
+			id,
 		});
 
 		return response.json(dataService);
 	}
 
-	public async update(request: Request, response: Response): Promise<Response> {
-		const userId = request.user.id;
-		const { name, email, oldPassword, password } = request.body;
+	public async avatar(request: Request, response: Response): Promise<Response> {
+		const { id } = request.body;
+		const fileName = request.file?.filename;
 
-		const updateService = container.resolve(UpdateService);
+		if (fileName) {
+			const avatarService = container.resolve(AvatarService);
 
-		const dataService = await updateService.execute({
-			userId,
-			name,
-			email,
-			oldPassword,
-			password,
-		});
+			const dataService = await avatarService.execute({
+				id,
+				fileName,
+			});
+			return response.json(dataService);
+		}
 
-		return response.json(dataService);
-	}
-
-	public async activate(
-		request: Request,
-		response: Response,
-	): Promise<Response> {
-		const { token } = request.body;
-
-		const activateService = container.resolve(ActivateService);
-
-		const dataService = await activateService.execute({
-			token,
-		});
-
-		return response.json(dataService);
+		return response.status(400).send();
 	}
 }
 
-export { UsersController };
+export { StoresController };

@@ -2,6 +2,7 @@ import { Store } from '@entities/Store';
 
 interface ICreateStoreDTO {
 	name: string;
+	email: string;
 	cnpj?: string;
 	instagram?: string;
 	facebook?: string;
@@ -10,9 +11,24 @@ interface ICreateStoreDTO {
 	avatar?: string;
 }
 
+interface IFindByEmailDTO {
+	email: string;
+	select?: (keyof Store)[];
+}
+
+interface IFindByIdDTO {
+	id: string;
+	select?: (keyof Store)[];
+}
+
+interface IFindAllStoresDTO {
+	select?: (keyof Store)[];
+}
+
 interface IStoresRepository {
 	create({
 		name,
+		email,
 		cnpj,
 		instagram,
 		facebook,
@@ -20,8 +36,17 @@ interface IStoresRepository {
 		phone,
 		avatar,
 	}: ICreateStoreDTO): Promise<Store>;
-	delete(store: Store): Promise<void>;
 	save(store: Store): Promise<Store>;
+	delete(store: Store): Promise<void>;
+	findByEmail({ email, select }: IFindByEmailDTO): Promise<Store | undefined>;
+	findById({ id, select }: IFindByIdDTO): Promise<Store | undefined>;
+	findAllStores({ select }: IFindAllStoresDTO): Promise<Store[] | undefined>;
 }
 
-export { IStoresRepository, ICreateStoreDTO };
+export {
+	IStoresRepository,
+	ICreateStoreDTO,
+	IFindByEmailDTO,
+	IFindByIdDTO,
+	IFindAllStoresDTO,
+};

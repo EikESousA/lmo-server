@@ -13,8 +13,14 @@ class Store {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
+	@Column({ default: null, nullable: true })
+	user_id: string;
+
 	@Column()
 	name: string;
+
+	@Column()
+	email: string;
 
 	@Column({ default: null, nullable: true })
 	cnpj: string;

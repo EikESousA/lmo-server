@@ -1,9 +1,9 @@
 import { Session } from '@entities/Session';
 
 interface ISessionsRepository {
-	generate(user_id: string, info: number): Promise<Session>;
+	create(user_id: string, info: number): Promise<Session>;
+	delete(session: Session): Promise<void>;
 	findByToken(token: string): Promise<Session | undefined>;
-	deleteSession(session: Session): Promise<void>;
 }
 
 export { ISessionsRepository };

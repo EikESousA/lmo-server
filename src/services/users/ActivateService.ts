@@ -55,7 +55,7 @@ class ActivateService {
 		user.activate = true;
 
 		await this.usersRepository.save(user);
-		await this.sessionsRepository.deleteSession(sessions);
+		await this.sessionsRepository.delete(sessions);
 
 		log(`🧑 Usuário ativado - EMAIL: ${user.email}`);
 

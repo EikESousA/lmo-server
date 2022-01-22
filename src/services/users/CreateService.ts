@@ -57,7 +57,7 @@ class CreateService {
 			password: hashedPassword,
 		});
 
-		const session = await this.sessionsRepository.generate(user.id, 1);
+		const session = await this.sessionsRepository.create(user.id, 1);
 
 		const createTemplateDir = path.resolve(
 			__dirname,

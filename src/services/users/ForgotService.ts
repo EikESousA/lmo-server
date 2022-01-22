@@ -39,7 +39,7 @@ class ForgotService {
 			throw new AppError('Usuário não existe!', 400);
 		}
 
-		const { token } = await this.sessionsRepository.generate(user.id, 0);
+		const { token } = await this.sessionsRepository.create(user.id, 0);
 
 		const forgotTemplateDir = path.resolve(
 			__dirname,

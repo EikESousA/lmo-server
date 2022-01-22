@@ -12,7 +12,7 @@ class FakeSessionsRepository implements ISessionsRepository {
 		return this.sessions;
 	}
 
-	public async generate(user_id: string, info: number): Promise<Session> {
+	public async create(user_id: string, info: number): Promise<Session> {
 		const session = new Session();
 
 		Object.assign(session, {
@@ -31,7 +31,7 @@ class FakeSessionsRepository implements ISessionsRepository {
 		return session;
 	}
 
-	public async deleteSession(session: Session): Promise<void> {
+	public async delete(session: Session): Promise<void> {
 		const updatedSessions = [...this.sessions];
 
 		const sessionIndex = updatedSessions.findIndex(

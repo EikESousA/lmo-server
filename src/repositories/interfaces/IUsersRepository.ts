@@ -21,7 +21,7 @@ interface IFindByIdDTO {
 	select?: (keyof User)[];
 }
 
-interface IFindAllProvidersDTO {
+interface IFindAllUsersDTO {
 	id: string;
 	select?: (keyof User)[];
 }
@@ -32,7 +32,7 @@ interface IUsersRepository {
 	session({ email, password, select }: ISessionDTO): Promise<User | undefined>;
 	findByEmail({ email, select }: IFindByEmailDTO): Promise<User | undefined>;
 	findById({ id, select }: IFindByIdDTO): Promise<User | undefined>;
-	findAllProviders({ id, select }: IFindAllProvidersDTO): Promise<User[]>;
+	findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]>;
 }
 
 export {
@@ -41,5 +41,5 @@ export {
 	ISessionDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
-	IFindAllProvidersDTO,
+	IFindAllUsersDTO,
 };

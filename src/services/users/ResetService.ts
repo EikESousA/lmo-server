@@ -61,7 +61,7 @@ class ResetService {
 
 		await this.usersRepository.save(user);
 
-		await this.sessionsRepository.deleteSession(session);
+		await this.sessionsRepository.delete(session);
 
 		return { data: null, message: 'Senha alterada com sucesso!' };
 	}

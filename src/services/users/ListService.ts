@@ -23,7 +23,7 @@ class ListService {
 	) {}
 
 	public async execute({ id }: IRequest): Promise<IResponse> {
-		const users = await this.usersRepository.findAllProviders({
+		const users = await this.usersRepository.findAllUsers({
 			id,
 			select: ['id', 'name', 'email', 'phone', 'activate'],
 		});

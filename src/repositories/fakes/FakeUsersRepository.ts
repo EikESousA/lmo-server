@@ -5,7 +5,7 @@ import {
 	ISessionDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
-	IFindAllProvidersDTO,
+	IFindAllUsersDTO,
 } from '@repositories/interfaces/IUsersRepository';
 
 class FakeUsersRepository implements IUsersRepository {
@@ -87,10 +87,7 @@ class FakeUsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	public async findAllProviders({
-		id,
-		select,
-	}: IFindAllProvidersDTO): Promise<User[]> {
+	public async findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]> {
 		const all_users = this.users.filter(filterUser => filterUser.id !== id);
 
 		all_users.forEach(user => {
