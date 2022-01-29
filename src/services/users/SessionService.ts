@@ -50,7 +50,7 @@ class SessionService {
 
 		if (!user) {
 			log(`❌ Usuário incorreto - EMAIL: ${email}`);
-			throw new AppError('Usuário ou e-mail incorreto!', 401);
+			throw new AppError('Usuário ou e-mail incorreto!', 400);
 		}
 
 		const passwordMatched = await this.hashProvider.compareHash(
@@ -59,8 +59,8 @@ class SessionService {
 		);
 
 		if (!passwordMatched) {
-			log(`❌ Senha incorreta - SENHA: ${password}`);
-			throw new AppError('Usuário ou e-mail incorreto!', 401);
+			log(`❌ Senha incorreta - EMAIL: ${email}`);
+			throw new AppError('Usuário ou e-mail incorreto!', 400);
 		}
 
 		const { secret, expiresIn } = authConfig.jwt;
