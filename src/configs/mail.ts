@@ -12,8 +12,8 @@ export default {
 	driver: process.env.MAIL_DRIVER || 'ethereal',
 	defaults: {
 		from: {
-			email: 'suporte@luar.app',
-			name: 'Luar - Suporte',
+			email: 'suporte@lmo.app',
+			name: 'Loja de Modas Online - Suporte',
 		},
 	},
 } as IMailConfig;

@@ -1,4 +1,4 @@
-# luar-server
+# lmo-server
 
 ## Docker
 

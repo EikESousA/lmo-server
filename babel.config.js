@@ -15,7 +15,6 @@ module.exports = {
 					"@entities": "./src/entities",
 					"@errors": "./src/errors",
 					"@middlewares": "./src/middlewares",
-					"@models": "./src/models",
 					"@providers": "./src/providers",
 					"@repositories": "./src/repositories",
 					"@routes": "./src/routes",

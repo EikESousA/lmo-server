@@ -3,20 +3,20 @@ version: "3.9"
 services:
   database:
     image: postgres
-    container_name: luar-database
+    container_name: lmo-database
     restart: always
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=luar
-      - POSTGRES_DB=luar
+      - POSTGRES_USER=lmodb
+      - POSTGRES_PASSWORD=lensbmensboensb
+      - POSTGRES_DB=lmo
     volumes:
       - pgdata:/data/postgres
 
   redis:
     image: redis:alpine
-    container_name: luar-redis
+    container_name: lmo-redis
     ports:
       - 6379:6379
 
