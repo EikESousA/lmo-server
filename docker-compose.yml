@@ -8,9 +8,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=lmodb
+      - POSTGRES_USER=lmouser
       - POSTGRES_PASSWORD=lensbmensboensb
-      - POSTGRES_DB=lmo
+      - POSTGRES_DB=lmodb
     volumes:
       - pgdata:/data/postgres
 

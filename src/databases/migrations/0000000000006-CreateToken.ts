@@ -6,11 +6,11 @@ import {
 	TableForeignKey,
 } from 'typeorm';
 
-export class CreateSession1640623685475 implements MigrationInterface {
+export class CreateToken0000000000006 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'session',
+				name: 'token',
 				columns: [
 					{
 						name: 'id',
@@ -44,18 +44,18 @@ export class CreateSession1640623685475 implements MigrationInterface {
 		);
 
 		await queryRunner.addColumn(
-			'session',
+			'token',
 			new TableColumn({
-				name: 'user_id',
+				name: 'user_store_id',
 				type: 'uuid',
 			}),
 		);
 
 		await queryRunner.createForeignKey(
-			'session',
+			'token',
 			new TableForeignKey({
-				columnNames: ['user_id'],
-				referencedTableName: 'user',
+				columnNames: ['user_store_id'],
+				referencedTableName: 'user_store',
 				referencedColumnNames: ['id'],
 				onDelete: 'CASCADE',
 				onUpdate: 'CASCADE',
@@ -64,16 +64,16 @@ export class CreateSession1640623685475 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		const table = await queryRunner.getTable('session');
+		const table = await queryRunner.getTable('token');
 
 		const foreignKey = table.foreignKeys.find(
-			fk => fk.columnNames.indexOf('user_id') !== -1,
+			fk => fk.columnNames.indexOf('user_store_id') !== -1,
 		);
 
-		await queryRunner.dropForeignKey('session', foreignKey);
+		await queryRunner.dropForeignKey('token', foreignKey);
 
-		await queryRunner.dropColumn('session', 'user_id');
+		await queryRunner.dropColumn('token', 'user_store_id');
 
-		await queryRunner.dropTable('session');
+		await queryRunner.dropTable('token');
 	}
 }
