@@ -4,8 +4,8 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
-import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { ITokensRepository } from '@repositories/Users/interfaces/ITokensRepository';
+import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
@@ -22,8 +22,8 @@ class ForgotService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
-		@inject('SessionsRepository')
-		private sessionsRepository: ISessionsRepository,
+		@inject('TokensRepository')
+		private tokensRepository: ITokensRepository,
 		@inject('MailProvider')
 		private mailProvider: IMailProvider,
 	) {}
@@ -39,7 +39,7 @@ class ForgotService {
 			throw new AppError('Usuário não existe!', 400);
 		}
 
-		const { token } = await this.sessionsRepository.create(user.id, 0);
+		const { token } = await this.tokensRepository.create(user.id, 0);
 
 		const forgotTemplateDir = path.resolve(
 			__dirname,

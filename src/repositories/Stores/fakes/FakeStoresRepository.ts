@@ -6,7 +6,7 @@ import {
 	IFindByIdDTO,
 	IFindByUserIdDTO,
 	IStoresRepository,
-} from '@repositories/interfaces/IStoresRepository';
+} from '@repositories/Stores/interfaces/IStoresRepository';
 
 class StoresRepository implements IStoresRepository {
 	private stores: Store[];

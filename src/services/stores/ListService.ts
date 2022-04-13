@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 
 import { Store } from '@entities/Store';
-import { IStoresRepository } from '@repositories/interfaces/IStoresRepository';
+import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
 import { log } from '@utils/log';
 
 interface IResponse {

@@ -4,11 +4,11 @@ import { User } from '@entities/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
-	ISessionDTO,
+	ITokenDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
 	IFindAllUsersDTO,
-} from '@repositories/interfaces/IUsersRepository';
+} from '@repositories/Users/interfaces/IUsersRepository';
 
 class UsersRepository implements IUsersRepository {
 	private repository: Repository<User>;
@@ -37,11 +37,11 @@ class UsersRepository implements IUsersRepository {
 		return this.repository.save(user);
 	}
 
-	public async session({
+	public async token({
 		email,
 		password,
 		select,
-	}: ISessionDTO): Promise<User | undefined> {
+	}: ITokenDTO): Promise<User | undefined> {
 		const user = await this.repository.findOne({
 			where: { email, password },
 			select,

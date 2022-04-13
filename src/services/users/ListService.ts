@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 
 import { User } from '@entities/User';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {

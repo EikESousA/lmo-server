@@ -8,8 +8,8 @@ import { Store } from '@entities/Store';
 import { User } from '@entities/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
-import { IStoresRepository } from '@repositories/interfaces/IStoresRepository';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
+import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {

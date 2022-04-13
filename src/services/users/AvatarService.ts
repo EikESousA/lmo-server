@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { IStorageProvider } from '@providers/interfaces/IStorageProvider';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersRepository } from '@repositories/interfaces/Users/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {

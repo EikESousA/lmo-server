@@ -7,7 +7,7 @@ import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
 import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersRepository } from '@repositories/interfaces/Users/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {

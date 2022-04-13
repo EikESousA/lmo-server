@@ -2,11 +2,11 @@ import { User } from '@entities/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
-	ISessionDTO,
+	ITokenDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
 	IFindAllUsersDTO,
-} from '@repositories/interfaces/IUsersRepository';
+} from '@repositories/Users/interfaces/IUsersRepository';
 
 class FakeUsersRepository implements IUsersRepository {
 	private users: User[];
@@ -45,11 +45,11 @@ class FakeUsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	public async session({
+	public async token({
 		email,
 		password,
 		select,
-	}: ISessionDTO): Promise<User | undefined> {
+	}: ITokenDTO): Promise<User | undefined> {
 		const user = this.users.find(
 			findUser => findUser.email === email && findUser.password === password,
 		);

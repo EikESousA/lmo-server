@@ -5,8 +5,8 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
-import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { ITokensRepository } from '@repositories/Users/interfaces/ITokensRepository';
+import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
@@ -23,22 +23,22 @@ class ResetService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
-		@inject('SessionsRepository')
-		private sessionsRepository: ISessionsRepository,
+		@inject('TokensRepository')
+		private tokensRepository: ITokensRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 	) {}
 
 	public async execute({ token, password }: IRequest): Promise<IResponse> {
-		const session = await this.sessionsRepository.findByToken(token);
+		const tokenFind = await this.tokensRepository.findByToken(token);
 
-		if (!session) {
+		if (!tokenFind) {
 			log(`❌ Token incorreto`);
 			throw new AppError('Token do usuário incorreto!');
 		}
 
 		const user = await this.usersRepository.findById({
-			id: session.user_id,
+			id: tokenFind.user_id,
 			select: ['id', 'password', 'email'],
 		});
 
@@ -47,7 +47,7 @@ class ResetService {
 			throw new AppError('Usuário não existe!');
 		}
 
-		const tokenCreatedAt = session.created_at;
+		const tokenCreatedAt = tokenFind.created_at;
 		const compareDate = addHours(tokenCreatedAt, 2);
 
 		if (isAfter(Date.now(), compareDate)) {
@@ -61,7 +61,7 @@ class ResetService {
 
 		await this.usersRepository.save(user);
 
-		await this.sessionsRepository.delete(session);
+		await this.tokensRepository.delete(tokenFind);
 
 		return { data: null, message: 'Senha alterada com sucesso!' };
 	}

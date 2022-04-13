@@ -5,7 +5,7 @@ interface ICreateUserDTO {
 	email: string;
 	password: string;
 }
-interface ISessionDTO {
+interface ITokenDTO {
 	email: string;
 	password: string;
 	select?: (keyof User)[];
@@ -29,7 +29,7 @@ interface IFindAllUsersDTO {
 interface IUsersRepository {
 	create({ name, email, password }: ICreateUserDTO): Promise<User>;
 	save(user: User): Promise<User>;
-	session({ email, password, select }: ISessionDTO): Promise<User | undefined>;
+	token({ email, password, select }: ITokenDTO): Promise<User | undefined>;
 	findByEmail({ email, select }: IFindByEmailDTO): Promise<User | undefined>;
 	findById({ id, select }: IFindByIdDTO): Promise<User | undefined>;
 	findAllUsers({ id, select }: IFindAllUsersDTO): Promise<User[]>;
@@ -38,7 +38,7 @@ interface IUsersRepository {
 export {
 	IUsersRepository,
 	ICreateUserDTO,
-	ISessionDTO,
+	ITokenDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
 	IFindAllUsersDTO,

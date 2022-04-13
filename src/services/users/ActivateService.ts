@@ -6,7 +6,7 @@ import { inject, injectable } from 'tsyringe';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
-import { IUsersRepository } from '@repositories/interfaces/IUsersRepository';
+import { IUsersRepository } from '@repositories/interfaces/Users/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
