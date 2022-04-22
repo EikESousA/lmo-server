@@ -1,14 +1,13 @@
-import { Store } from '@entities/Store';
+import { Store } from '@entities/Store/Store';
 import {
 	ICreateStoreDTO,
 	IFindAllStoresDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
-	IFindByUserIdDTO,
 	IStoresRepository,
 } from '@repositories/Stores/interfaces/IStoresRepository';
 
-class StoresRepository implements IStoresRepository {
+class FakeStoresRepository implements IStoresRepository {
 	private stores: Store[];
 
 	constructor() {
@@ -16,22 +15,22 @@ class StoresRepository implements IStoresRepository {
 	}
 
 	public async create({
+		addressId,
 		name,
 		cnpj,
 		instagram,
 		facebook,
-		address,
 		phone,
 		avatar,
 	}: ICreateStoreDTO): Promise<Store> {
 		const store = new Store();
 
 		Object.assign(store, {
+			addressId,
 			name,
 			cnpj,
 			instagram,
 			facebook,
-			address,
 			phone,
 			avatar,
 		});
@@ -89,19 +88,6 @@ class StoresRepository implements IStoresRepository {
 		return store;
 	}
 
-	public async findByUserId({
-		id,
-		select,
-	}: IFindByUserIdDTO): Promise<Store | undefined> {
-		const store = this.stores.find(findStore => findStore.user_id === id);
-
-		select.forEach(atribute => {
-			delete store[atribute];
-		});
-
-		return store;
-	}
-
 	public async findAllStores({ select }: IFindAllStoresDTO): Promise<Store[]> {
 		const all_users = [...this.stores];
 
@@ -116,4 +102,4 @@ class StoresRepository implements IStoresRepository {
 	}
 }
 
-export { StoresRepository };
+export { FakeStoresRepository };

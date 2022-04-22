@@ -1,10 +1,11 @@
-import { User } from '@entities/User';
+import { User } from '@entities/User/User';
 
 interface ICreateUserDTO {
 	name: string;
 	email: string;
 	password: string;
 }
+
 interface ITokenDTO {
 	email: string;
 	password: string;

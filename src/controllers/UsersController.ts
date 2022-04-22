@@ -1,21 +1,25 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { ActivateService } from '@services/users/ActivateService';
-import { AvatarService } from '@services/users/AvatarService';
-import { CreateService } from '@services/users/CreateService';
-import { ForgotService } from '@services/users/ForgotService';
-import { ListService } from '@services/users/ListService';
-import { ResetService } from '@services/users/ResetService';
-import { SessionService } from '@services/users/SessionService';
-import { ShowService } from '@services/users/ShowService';
-import { UpdateService } from '@services/users/UpdateService';
+import { ActivateService } from '@services/Users/ActivateService';
+import { AvatarService } from '@services/Users/AvatarService';
+import { CreateService } from '@services/Users/CreateService';
+import { ForgotService } from '@services/Users/ForgotService';
+import { ListService } from '@services/Users/ListService';
+import { ResetService } from '@services/Users/ResetService';
+import { SessionService } from '@services/Users/SessionService';
+import { ShowService } from '@services/Users/ShowService';
+import { UpdateService } from '@services/Users/UpdateService';
 
 class UsersController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const { name, email, password } = request.body;
 
+		console.log('body');
+
 		const createService = container.resolve(CreateService);
+
+		console.log('createService');
 
 		const dataService = await createService.execute({
 			name,

@@ -6,16 +6,16 @@ import {
 	UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('store_categorie')
-class StoreCategories {
+@Entity('store_category')
+class StoreCategory {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column()
-	id_store: string;
+	@Column({ name: 'store_id' })
+	storeId: string;
 
-	@Column()
-	name: string;
+	@Column({ name: 'category_id' })
+	categoryId: string;
 
 	@CreateDateColumn()
 	created_at: Date;
@@ -24,4 +24,4 @@ class StoreCategories {
 	updated_at: Date;
 }
 
-export { StoreCategories };
+export { StoreCategory };

@@ -1,12 +1,11 @@
 import { Repository, getRepository } from 'typeorm';
 
-import { Store } from '@entities/Store';
+import { Store } from '@entities/Store/Store';
 import {
 	ICreateStoreDTO,
 	IFindAllStoresDTO,
 	IFindByEmailDTO,
 	IFindByIdDTO,
-	IFindByUserIdDTO,
 	IStoresRepository,
 } from '@repositories/Stores/interfaces/IStoresRepository';
 
@@ -18,22 +17,22 @@ class StoresRepository implements IStoresRepository {
 	}
 
 	public async create({
+		addressId,
 		name,
 		email,
 		cnpj,
 		instagram,
 		facebook,
-		address,
 		phone,
 		avatar,
 	}: ICreateStoreDTO): Promise<Store> {
 		const store = this.repository.create({
+			addressId,
 			name,
 			email,
 			cnpj,
 			instagram,
 			facebook,
-			address,
 			phone,
 			avatar,
 		});
@@ -63,18 +62,6 @@ class StoresRepository implements IStoresRepository {
 		select,
 	}: IFindByIdDTO): Promise<Store | undefined> {
 		const store = await this.repository.findOne({ where: { id }, select });
-
-		return store;
-	}
-
-	public async findByUserId({
-		id,
-		select,
-	}: IFindByUserIdDTO): Promise<Store | undefined> {
-		const store = await this.repository.findOne({
-			where: { user_id: id },
-			select,
-		});
 
 		return store;
 	}

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { inject, injectable } from 'tsyringe';
 
-import { Store } from '@entities/Store';
+import { Store } from '@entities/Store/Store';
 import { AppError } from '@errors/AppError';
 import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
 import { log } from '@utils/log';
@@ -33,8 +33,6 @@ class LinkService {
 			log(`❌ Empresa não autenticada`);
 			throw new AppError('Empresa não autenticada!');
 		}
-
-		store.user_id = userId;
 
 		log(`🏪 Empresa atualizada - EMAIL: ${store.email}`);
 

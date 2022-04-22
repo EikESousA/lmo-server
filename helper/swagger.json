@@ -1,0 +1,1415 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Documentação do LMO",
+		"description": "Todas a rotas da API LMO estão definidas aqui.",
+		"version": "1.0.0",
+		"contact": {
+			"name": "EikE SousA",
+			"email": "eike.sousa@hotmail.com"
+		}
+	},
+	"paths": {
+		"/address/create": {
+			"post": {
+				"tags": [
+					"Address"
+				],
+				"summary": "Cria Endereço",
+				"description": "Cria um novo endereço com os campos (rua, bairro, número, cep, cidade, estado, país e url do google maps). \nEsse endereço serve tanto para a empresa como possivelmente para o usuário.\nTodos os campos sao obrigatórios exceto a url.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/Schemas/Address"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/address/update/{id}": {
+			"post": {
+				"tags": [
+					"Address"
+				],
+				"summary": "Atualiza o endereço",
+				"description": "Atualiza um endereço já existente com o id dele.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id do Endereço",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/Schemas/Address"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Endereço atualizado.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/definitions/Address"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Endereço não alterado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/address/show/{id}": {
+			"post": {
+				"tags": [
+					"Address"
+				],
+				"summary": "Mostra um endereço",
+				"description": "Mostra todos os dados do endereço a partir de um id.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id do Endereço",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/Schemas/Address"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Endereço listado.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/definitions/Address"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/store/create": {
+			"post": {
+				"tags": [
+					"Store"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/store/update/{id}": {
+			"put": {
+				"tags": [
+					"Store"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/store/avatar/{id}": {
+			"patch": {
+				"tags": [
+					"Store"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/store/activate/{id}": {
+			"post": {
+				"tags": [
+					"Store"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/store/show/{id}": {
+			"get": {
+				"tags": [
+					"Store"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/store/list": {
+			"get": {
+				"tags": [
+					"Store"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/create": {
+			"post": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/update": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/avatar": {
+			"patch": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/forgot": {
+			"post": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/reset": {
+			"patch": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/activate": {
+			"patch": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/show": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/users/list": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Cria Usuário",
+				"description": "Cria um novo usuário.",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Usuario Teste",
+									"email": "usuario@teste.com",
+									"password": "senhateste"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Usuário criado.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": null
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"data",
+								"message"
+							]
+						}
+					},
+					"400": {
+						"description": "Usuário já existe.",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							]
+						}
+					}
+				}
+			}
+		}
+	},
+
+
+	"definitions": {
+		"Properties": {
+			"street": {
+				"type": "string",
+				"example": "Area 51"
+			},
+			"district": {
+				"type": "string",
+				"example": "Bairro desconhecido"
+			},
+			"number": {
+				"type": "string",
+				"example": "51"
+			},
+			"cep": {
+				"type": "string",
+				"example": "49000000"
+			},
+			"city": {
+				"type": "string",
+				"example": "Nevada"
+			},
+			"state": {
+				"type": "string",
+				"example": "Nevada"
+			},
+			"country": {
+				"type": "string",
+				"example": "EUA"
+			},
+			"url": {
+				"type": "string",
+				"example": "https://www.google.com.br/maps/place/%C3%81rea+51,+NV,+EUA/@37.2514312,-115.9392965,12z/data=!3m1!4b1!4m5!3m4!1s0x80b81baaba3e8c81:0x970427e38e6237ae!8m2!3d37.2430548!4d-115.7930198?hl=pt-BR"
+			}
+		},
+		"Schemas": {
+			"Address": {
+				"type": "object",
+				"properties": {
+					"$ref": "#/definitions/Properties/street",
+					"$ref": "#/definitions/Properties/district",
+					"$ref": "#/definitions/Properties/number",
+					"cep": {
+						"type": "string",
+						"example": "49000000"
+					},
+					"city": {
+						"type": "string",
+						"example": "Nevada"
+					},
+					"state": {
+						"type": "string",
+						"example": "Nevada"
+					},
+					"country": {
+						"type": "string",
+						"example": "EUA"
+					},
+					"url": {
+						"type": "string",
+						"example": "https://www.google.com.br/maps/place/%C3%81rea+51,+NV,+EUA/@37.2514312,-115.9392965,12z/data=!3m1!4b1!4m5!3m4!1s0x80b81baaba3e8c81:0x970427e38e6237ae!8m2!3d37.2430548!4d-115.7930198?hl=pt-BR"
+					}
+				},
+				"required": [
+					"street",
+					"district",
+					"number",
+					"cep",
+					"city",
+					"state",
+					"country"
+				]
+			},
+			"Store": {
+				"type": "object",
+				"properties": {
+					"street": {
+						"type": "string"
+					},
+					"district": {
+						"type": "string"
+					},
+					"number": {
+						"type": "string"
+					},
+					"cep": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"country": {
+						"type": "string"
+					},
+					"url": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"street",
+					"district",
+					"number",
+					"cep",
+					"city",
+					"state",
+					"country"
+				],
+				"example": {
+					"street": "Area 51",
+					"district": "Bairro desconhecido",
+					"number": 51,
+					"cep": 49000000,
+					"city": "Nevada",
+					"state": "Nevada",
+					"country": "EUA",
+					"url": "https://www.google.com.br/maps/place/%C3%81rea+51,+NV,+EUA/@37.2514312,-115.9392965,12z/data=!3m1!4b1!4m5!3m4!1s0x80b81baaba3e8c81:0x970427e38e6237ae!8m2!3d37.2430548!4d-115.7930198?hl=pt-BR"
+				}
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	}
+}

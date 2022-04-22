@@ -6,33 +6,33 @@ import {
 	UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('store_address')
-class StoreAddress {
+@Entity('address')
+class Address {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
-
-	@Column()
-	id_store: string;
 
 	@Column()
 	street: string;
 
 	@Column()
+	district: string;
+
+	@Column()
 	number: string;
 
-	@Column({ default: null, nullable: true })
+	@Column()
 	cep: string;
 
-	@Column({ default: null, nullable: true })
+	@Column()
 	city: string;
 
-	@Column({ default: null, nullable: true })
+	@Column()
 	state: string;
 
-	@Column({ default: null, nullable: true })
+	@Column()
 	country: string;
 
-	@Column({ default: null, nullable: true })
+	@Column()
 	url: string;
 
 	@CreateDateColumn()
@@ -42,4 +42,4 @@ class StoreAddress {
 	updated_at: Date;
 }
 
-export { StoreAddress };
+export { Address };

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { inject, injectable } from 'tsyringe';
 
-import { User } from '@entities/User';
+import { User } from '@entities/User/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';

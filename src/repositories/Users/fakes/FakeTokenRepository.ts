@@ -1,4 +1,4 @@
-import { Token } from '@entities/Token';
+import { Token } from '@entities/User/Token';
 import { ITokensRepository } from '@repositories/Users/interfaces/ITokensRepository';
 
 class FakeTokensRepository implements ITokensRepository {

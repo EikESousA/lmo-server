@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { inject, injectable } from 'tsyringe';
 
-import { Store } from '@entities/Store';
+import { Store } from '@entities/Store/Store';
 import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
 import { log } from '@utils/log';
 

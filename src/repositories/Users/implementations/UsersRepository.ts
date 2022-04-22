@@ -1,6 +1,6 @@
 import { Repository, getRepository, Not } from 'typeorm';
 
-import { User } from '@entities/User';
+import { User } from '@entities/User/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
@@ -43,8 +43,8 @@ class UsersRepository implements IUsersRepository {
 		select,
 	}: ITokenDTO): Promise<User | undefined> {
 		const user = await this.repository.findOne({
-			where: { email, password },
 			select,
+			where: { email, password },
 		});
 
 		return user;

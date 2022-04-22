@@ -2,18 +2,18 @@ import 'reflect-metadata';
 
 import { inject, injectable } from 'tsyringe';
 
-import { Store } from '@entities/Store';
+import { Store } from '@entities/Store/Store';
 import { AppError } from '@errors/AppError';
 import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
+	addressId?: string;
 	name: string;
 	email: string;
 	cnpj?: string;
 	instagram?: string;
 	facebook?: string;
-	address?: string;
 	phone?: string;
 }
 
@@ -30,13 +30,13 @@ class CreateService {
 	) {}
 
 	public async execute({
+		addressId,
 		name,
 		email,
 		cnpj,
 		facebook,
 		instagram,
 		phone,
-		address,
 	}: IRequest): Promise<IResponse> {
 		const storeAlreadyExists = await this.storesRepository.findByEmail({
 			email,
@@ -55,14 +55,13 @@ class CreateService {
 			facebook,
 			instagram,
 			phone,
-			address,
+			addressId,
 		});
 
-		delete store.user_id;
 		delete store.cnpj;
 		delete store.instagram;
 		delete store.facebook;
-		delete store.address;
+		delete store.addressId;
 		delete store.phone;
 		delete store.created_at;
 		delete store.updated_at;

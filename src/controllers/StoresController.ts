@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { AvatarService } from '@services/stores/AvatarService';
-import { CreateService } from '@services/stores/CreateService';
-import { DisableService } from '@services/stores/DisableService';
-import { LinkService } from '@services/stores/LinkService';
-import { ListService } from '@services/stores/ListService';
-import { ShowService } from '@services/stores/ShowService';
-import { UpdateService } from '@services/stores/UpdateService';
+import { AvatarService } from '@services/Stores/AvatarService';
+import { CreateService } from '@services/Stores/CreateService';
+import { DisableService } from '@services/Stores/DisableService';
+import { LinkService } from '@services/Stores/LinkService';
+import { ListService } from '@services/Stores/ListService';
+import { ShowService } from '@services/Stores/ShowService';
+import { UpdateService } from '@services/Stores/UpdateService';
 
 class StoresController {
 	public async create(request: Request, response: Response): Promise<Response> {

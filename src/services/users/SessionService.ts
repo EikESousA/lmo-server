@@ -4,8 +4,8 @@ import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
 import authConfig from '@configs/auth';
-import { Store } from '@entities/Store';
-import { User } from '@entities/User';
+import { Store } from '@entities/Store/Store';
+import { User } from '@entities/User/User';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';

@@ -1,4 +1,4 @@
-import { User } from '@entities/User';
+import { User } from '@entities/User/User';
 import {
 	IUsersRepository,
 	ICreateUserDTO,
@@ -67,9 +67,13 @@ class FakeUsersRepository implements IUsersRepository {
 	}: IFindByEmailDTO): Promise<User | undefined> {
 		const user = this.users.find(findUser => findUser.email === email);
 
-		select.forEach(atribute => {
-			delete user[atribute];
-		});
+		if (user) {
+			select.forEach(atribute => {
+				if (user[atribute]) {
+					delete user[atribute];
+				}
+			});
+		}
 
 		return user;
 	}
@@ -80,9 +84,13 @@ class FakeUsersRepository implements IUsersRepository {
 	}: IFindByIdDTO): Promise<User | undefined> {
 		const user = this.users.find(findUser => findUser.id === id);
 
-		select.forEach(atribute => {
-			delete user[atribute];
-		});
+		if (user) {
+			select.forEach(atribute => {
+				if (user[atribute]) {
+					delete user[atribute];
+				}
+			});
+		}
 
 		return user;
 	}

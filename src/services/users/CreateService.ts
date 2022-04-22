@@ -6,8 +6,8 @@ import { inject, injectable } from 'tsyringe';
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
-import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
-import { IUsersRepository } from '@repositories/interfaces/Users/IUsersRepository';
+import { ITokensRepository } from '@repositories/Users/interfaces/ITokensRepository';
+import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
@@ -28,8 +28,8 @@ class CreateService {
 		private usersRepository: IUsersRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
-		@inject('SessionsRepository')
-		private sessionsRepository: ISessionsRepository,
+		@inject('TokensRepository')
+		private tokensRepository: ITokensRepository,
 		@inject('MailProvider')
 		private mailProvider: IMailProvider,
 	) {}
@@ -39,10 +39,14 @@ class CreateService {
 		email,
 		password,
 	}: IRequest): Promise<IResponse> {
+		console.log('Inicia');
+
 		const userAlreadyExists = await this.usersRepository.findByEmail({
 			email,
 			select: ['id'],
 		});
+
+		console.log('userAlreadyExists', userAlreadyExists);
 
 		if (userAlreadyExists) {
 			log(`❌ Usuário já existe - EMAIL: ${email}`);
@@ -51,13 +55,19 @@ class CreateService {
 
 		const hashedPassword = await this.hashProvider.generateHash(password);
 
+		console.log('hashedPassword', hashedPassword);
+
 		const user = await this.usersRepository.create({
 			name,
 			email,
 			password: hashedPassword,
 		});
 
-		const session = await this.sessionsRepository.create(user.id, 1);
+		console.log('user', user);
+
+		const session = await this.tokensRepository.create(user.id, 1);
+
+		console.log('session', session);
 
 		const createTemplateDir = path.resolve(
 			__dirname,

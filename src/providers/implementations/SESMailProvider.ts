@@ -1,12 +1,13 @@
+import aws from 'aws-sdk';
+import nodemailer, { Transporter } from 'nodemailer';
+import { injectable, inject } from 'tsyringe';
+
 import mailConfig from '@configs/mail';
 import {
 	IMailProvider,
 	ISendMailDTO,
 } from '@providers/interfaces/IMailProvider';
 import { IMailTemplateProvider } from '@providers/interfaces/IMailTemplateProvider';
-import aws from 'aws-sdk';
-import nodemailer, { Transporter } from 'nodemailer';
-import { injectable, inject } from 'tsyringe';
 
 @injectable()
 class SESMailProvider implements IMailProvider {

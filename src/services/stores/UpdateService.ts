@@ -2,19 +2,19 @@ import 'reflect-metadata';
 
 import { inject, injectable } from 'tsyringe';
 
-import { Store } from '@entities/Store';
+import { Store } from '@entities/Store/Store';
 import { AppError } from '@errors/AppError';
 import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
 	id: string;
+	addressId?: string;
 	name?: string;
 	email?: string;
 	cnpj?: string;
 	instagram?: string;
 	facebook?: string;
-	address?: string;
 	phone?: string;
 }
 
@@ -31,6 +31,7 @@ class UpdateService {
 	) {}
 
 	public async execute({
+		addressId,
 		id,
 		name,
 		email,
@@ -38,7 +39,6 @@ class UpdateService {
 		facebook,
 		instagram,
 		phone,
-		address,
 	}: IRequest): Promise<IResponse> {
 		const store = await this.storesRepository.findById({
 			id,
@@ -78,8 +78,8 @@ class UpdateService {
 			store.instagram = instagram;
 		}
 
-		if (address) {
-			store.address = address;
+		if (addressId) {
+			store.addressId = addressId;
 		}
 
 		if (phone) {

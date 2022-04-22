@@ -1,3 +1,5 @@
+import { container } from 'tsyringe';
+
 import mailConfig from '@configs/mail';
 import uploadConfig from '@configs/upload';
 import { BCryptHashProvider } from '@providers/implementations/BCryptHashProvider';
@@ -10,7 +12,6 @@ import { IHashProvider } from '@providers/interfaces/IHashProvider';
 import { IMailProvider } from '@providers/interfaces/IMailProvider';
 import { IMailTemplateProvider } from '@providers/interfaces/IMailTemplateProvider';
 import { IStorageProvider } from '@providers/interfaces/IStorageProvider';
-import { container } from 'tsyringe';
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
 

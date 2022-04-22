@@ -8,7 +8,9 @@ import '@repositories/index';
 
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
+import swaggerUi from 'swagger-ui-express';
 
+import repositoryConfig from '@configs/repository';
 import createConnection from '@databases/index';
 import { AppError } from '@errors/AppError';
 import rateLimiter from '@middlewares/rateLimiter';
@@ -17,11 +19,17 @@ import { staticRoutes } from '@routes/static.routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 
-createConnection();
+import swaggerFile from '../helper/swagger.json';
+
+if (repositoryConfig.repository === 'implementation') {
+	createConnection();
+}
 
 const app = express();
 
-app.use(rateLimiter);
+if (repositoryConfig.repository === 'implementation') {
+	app.use(rateLimiter);
+}
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
@@ -39,6 +47,8 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 
 app.use(staticRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(cors());
 app.use(routes);

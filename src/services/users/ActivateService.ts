@@ -5,8 +5,8 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { IHashProvider } from '@providers/interfaces/IHashProvider';
-import { ISessionsRepository } from '@repositories/interfaces/ISessionsRepository';
-import { IUsersRepository } from '@repositories/interfaces/Users/IUsersRepository';
+import { ITokensRepository } from '@repositories/Users/interfaces/ITokensRepository';
+import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepository';
 import { log } from '@utils/log';
 
 interface IRequest {
@@ -23,14 +23,14 @@ class ActivateService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
-		@inject('SessionsRepository')
-		private sessionsRepository: ISessionsRepository,
+		@inject('TokensRepository')
+		private tokensRepository: ITokensRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 	) {}
 
 	public async execute({ token }: IRequest): Promise<IResponse> {
-		const sessions = await this.sessionsRepository.findByToken(token);
+		const sessions = await this.tokensRepository.findByToken(token);
 
 		if (!sessions || sessions.info === 0) {
 			log(`❌ Token incorreto`);
@@ -55,7 +55,7 @@ class ActivateService {
 		user.activate = true;
 
 		await this.usersRepository.save(user);
-		await this.sessionsRepository.delete(sessions);
+		await this.tokensRepository.delete(sessions);
 
 		log(`🧑 Usuário ativado - EMAIL: ${user.email}`);
 

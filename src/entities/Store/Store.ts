@@ -13,8 +13,8 @@ class Store {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column({ default: null, nullable: true })
-	user_id: string;
+	@Column({ name: 'address_id' })
+	addressId: string;
 
 	@Column()
 	name: string;
@@ -32,13 +32,13 @@ class Store {
 	facebook: string;
 
 	@Column({ default: null, nullable: true })
-	address: string;
-
-	@Column({ default: null, nullable: true })
 	phone: string;
 
 	@Column({ default: null, nullable: true })
 	avatar: string;
+
+	@Column()
+	url: string;
 
 	@Column({ default: true })
 	activate: boolean;
