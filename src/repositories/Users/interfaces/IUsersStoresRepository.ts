@@ -6,7 +6,7 @@ interface ISessionDTO {
 	select?: (keyof UserStore)[];
 }
 
-interface IUsersStoresRepository {
+interface IUsersStoreRepository {
 	session({
 		email,
 		password,
@@ -14,4 +14,4 @@ interface IUsersStoresRepository {
 	}: ISessionDTO): Promise<UserStore | undefined>;
 }
 
-export { IUsersStoresRepository, ISessionDTO };
+export { IUsersStoreRepository, ISessionDTO };

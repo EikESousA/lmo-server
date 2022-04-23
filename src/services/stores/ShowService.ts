@@ -20,11 +20,11 @@ interface IResponse {
 class ShowService {
 	constructor(
 		@inject('StoresRepository')
-		private storesRepository: IStoresRepository,
+		private StoresRepository: IStoresRepository,
 	) {}
 
 	public async execute({ id }: IRequest): Promise<IResponse> {
-		const store = await this.storesRepository.findById({
+		const store = await this.StoresRepository.findById({
 			id,
 			select: ['id', 'name', 'email', 'avatar', 'activate'],
 		});

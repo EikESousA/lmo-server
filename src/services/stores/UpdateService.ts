@@ -26,8 +26,8 @@ interface IResponse {
 @injectable()
 class UpdateService {
 	constructor(
-		@inject('StoresRepository')
-		private storesRepository: IStoresRepository,
+		@inject('StoreRepository')
+		private StoresRepository: IStoresRepository,
 	) {}
 
 	public async execute({
@@ -40,7 +40,7 @@ class UpdateService {
 		instagram,
 		phone,
 	}: IRequest): Promise<IResponse> {
-		const store = await this.storesRepository.findById({
+		const store = await this.StoresRepository.findById({
 			id,
 		});
 
@@ -54,7 +54,7 @@ class UpdateService {
 		}
 
 		if (email) {
-			const userWithUpdatedEmail = await this.storesRepository.findByEmail({
+			const userWithUpdatedEmail = await this.StoresRepository.findByEmail({
 				email,
 			});
 
@@ -86,7 +86,7 @@ class UpdateService {
 			store.phone = phone;
 		}
 
-		this.storesRepository.save(store);
+		this.StoresRepository.save(store);
 
 		store.avatar_url = store.getAvatar_URL();
 

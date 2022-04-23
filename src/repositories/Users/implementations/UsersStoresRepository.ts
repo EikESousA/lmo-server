@@ -2,11 +2,11 @@ import { Repository, getRepository } from 'typeorm';
 
 import { UserStore } from '@entities/User/UserStore';
 import {
-	IUsersStoresRepository,
+	IUsersStoreRepository,
 	ISessionDTO,
-} from '@repositories/Users/interfaces/IUsersStoresRepository';
+} from '@repositories/Users/interfaces/IUsersStoreRepository';
 
-class UsersStoresRepository implements IUsersStoresRepository {
+class UsersStoreRepository implements IUsersStoreRepository {
 	private repository: Repository<UserStore>;
 
 	constructor() {
@@ -27,4 +27,4 @@ class UsersStoresRepository implements IUsersStoresRepository {
 	}
 }
 
-export { UsersStoresRepository };
+export { UsersStoreRepository };

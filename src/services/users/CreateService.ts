@@ -39,14 +39,10 @@ class CreateService {
 		email,
 		password,
 	}: IRequest): Promise<IResponse> {
-		console.log('Inicia');
-
 		const userAlreadyExists = await this.usersRepository.findByEmail({
 			email,
 			select: ['id'],
 		});
-
-		console.log('userAlreadyExists', userAlreadyExists);
 
 		if (userAlreadyExists) {
 			log(`❌ Usuário já existe - EMAIL: ${email}`);
@@ -55,19 +51,13 @@ class CreateService {
 
 		const hashedPassword = await this.hashProvider.generateHash(password);
 
-		console.log('hashedPassword', hashedPassword);
-
 		const user = await this.usersRepository.create({
 			name,
 			email,
 			password: hashedPassword,
 		});
 
-		console.log('user', user);
-
 		const session = await this.tokensRepository.create(user.id, 1);
-
-		console.log('session', session);
 
 		const createTemplateDir = path.resolve(
 			__dirname,

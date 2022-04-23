@@ -26,7 +26,7 @@ interface IResponse {
 class CreateService {
 	constructor(
 		@inject('StoresRepository')
-		private storesRepository: IStoresRepository,
+		private StoresRepository: IStoresRepository,
 	) {}
 
 	public async execute({
@@ -38,7 +38,7 @@ class CreateService {
 		instagram,
 		phone,
 	}: IRequest): Promise<IResponse> {
-		const storeAlreadyExists = await this.storesRepository.findByEmail({
+		const storeAlreadyExists = await this.StoresRepository.findByEmail({
 			email,
 			select: ['id'],
 		});
@@ -48,7 +48,7 @@ class CreateService {
 			throw new AppError('Empresa já existe!', 400);
 		}
 
-		const store = await this.storesRepository.create({
+		const store = await this.StoresRepository.create({
 			name,
 			email,
 			cnpj,

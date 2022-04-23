@@ -44,16 +44,7 @@ class StoresValidator {
 		return verifyError({ request, response, next, schema });
 	}
 
-	link(request: Request, response: Response, next: NextFunction) {
-		const schema = Joi.object().keys({
-			id: Joi.string().required().label('ID'),
-			userId: Joi.string().required().label('ID do usuário'),
-		});
-
-		return verifyError({ request, response, next, schema });
-	}
-
-	disable(request: Request, response: Response, next: NextFunction) {
+	activate(request: Request, response: Response, next: NextFunction) {
 		const schema = Joi.object().keys({
 			id: Joi.string().required().label('ID'),
 			activate: Joi.boolean().required().label('Campo ativo'),

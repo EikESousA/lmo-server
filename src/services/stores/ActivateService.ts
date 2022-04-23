@@ -18,14 +18,14 @@ interface IResponse {
 }
 
 @injectable()
-class DisableService {
+class ActivateService {
 	constructor(
 		@inject('StoresRepository')
-		private storesRepository: IStoresRepository,
+		private StoresRepository: IStoresRepository,
 	) {}
 
 	public async execute({ id, activate }: IRequest): Promise<IResponse> {
-		const store = await this.storesRepository.findById({
+		const store = await this.StoresRepository.findById({
 			id,
 		});
 
@@ -42,4 +42,4 @@ class DisableService {
 	}
 }
 
-export { DisableService };
+export { ActivateService };

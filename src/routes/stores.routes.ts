@@ -34,19 +34,13 @@ storesRoutes.get(
 	StoresValidator.list,
 	storesController.list,
 );
+
 storesRoutes.post(
-	'/link',
+	'/activate',
 	ensureAuthenticated,
 	ensureAdmin,
-	StoresValidator.link,
-	storesController.link,
-);
-storesRoutes.post(
-	'/disable',
-	ensureAuthenticated,
-	ensureAdmin,
-	StoresValidator.disable,
-	storesController.disable,
+	StoresValidator.activate,
+	storesController.activate,
 );
 storesRoutes.post(
 	'/update',

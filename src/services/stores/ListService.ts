@@ -15,11 +15,11 @@ interface IResponse {
 class ListService {
 	constructor(
 		@inject('StoresRepository')
-		private storesRepository: IStoresRepository,
+		private StoresRepository: IStoresRepository,
 	) {}
 
 	public async execute(): Promise<IResponse> {
-		const users = await this.storesRepository.findAllStores({
+		const users = await this.StoresRepository.findAllStores({
 			select: ['id', 'name', 'email', 'activate'],
 		});
 

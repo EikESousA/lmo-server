@@ -1,25 +1,22 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import { ActivateService } from '@services/Stores/ActivateService';
 import { AvatarService } from '@services/Stores/AvatarService';
 import { CreateService } from '@services/Stores/CreateService';
-import { DisableService } from '@services/Stores/DisableService';
-import { LinkService } from '@services/Stores/LinkService';
 import { ListService } from '@services/Stores/ListService';
 import { ShowService } from '@services/Stores/ShowService';
 import { UpdateService } from '@services/Stores/UpdateService';
 
 class StoresController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { name, email, address, phone, instagram, facebook, cnpj } =
-			request.body;
+		const { name, email, phone, instagram, facebook, cnpj } = request.body;
 
 		const createService = container.resolve(CreateService);
 
 		const dataService = await createService.execute({
 			name,
 			email,
-			address,
 			phone,
 			instagram,
 			facebook,
@@ -38,8 +35,7 @@ class StoresController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { id, name, email, address, cnpj, facebook, instagram, phone } =
-			request.body;
+		const { id, name, email, cnpj, facebook, instagram, phone } = request.body;
 
 		const updateService = container.resolve(UpdateService);
 
@@ -47,7 +43,6 @@ class StoresController {
 			id,
 			name,
 			email,
-			address,
 			cnpj,
 			facebook,
 			instagram,
@@ -57,28 +52,15 @@ class StoresController {
 		return response.json(dataService);
 	}
 
-	public async link(request: Request, response: Response): Promise<Response> {
-		const { id, userId } = request.body;
-
-		const linkService = container.resolve(LinkService);
-
-		const dataService = await linkService.execute({
-			id,
-			userId,
-		});
-
-		return response.json(dataService);
-	}
-
-	public async disable(
+	public async activate(
 		request: Request,
 		response: Response,
 	): Promise<Response> {
 		const { id, activate } = request.body;
 
-		const disableService = container.resolve(DisableService);
+		const activateService = container.resolve(ActivateService);
 
-		const dataService = await disableService.execute({
+		const dataService = await activateService.execute({
 			id,
 			activate,
 		});

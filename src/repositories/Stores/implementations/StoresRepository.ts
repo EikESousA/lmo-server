@@ -44,10 +44,6 @@ class StoresRepository implements IStoresRepository {
 		return this.repository.save(store);
 	}
 
-	public async delete(store: Store): Promise<void> {
-		await this.repository.remove(store);
-	}
-
 	public async findByEmail({
 		email,
 		select,

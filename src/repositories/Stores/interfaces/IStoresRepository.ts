@@ -37,7 +37,6 @@ interface IStoresRepository {
 		avatar,
 	}: ICreateStoreDTO): Promise<Store>;
 	save(store: Store): Promise<Store>;
-	delete(store: Store): Promise<void>;
 	findByEmail({ email, select }: IFindByEmailDTO): Promise<Store | undefined>;
 	findById({ id, select }: IFindByIdDTO): Promise<Store | undefined>;
 	findAllStores({ select }: IFindAllStoresDTO): Promise<Store[] | undefined>;

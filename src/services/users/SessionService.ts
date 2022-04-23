@@ -30,7 +30,7 @@ class SessionService {
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 		@inject('StoresRepository')
-		private storesRepository: IStoresRepository,
+		private StoresRepository: IStoresRepository,
 	) {}
 
 	public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -75,7 +75,7 @@ class SessionService {
 		delete user.avatar;
 		delete user.password;
 
-		const store = await this.storesRepository.findByUserId({ id: user.id });
+		const store = undefined;
 
 		log(`🧑 Usuário conectado - EMAIL: ${email}`);
 

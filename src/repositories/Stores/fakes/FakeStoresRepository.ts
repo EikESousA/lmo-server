@@ -1,3 +1,5 @@
+import { v4 as uuidV4 } from 'uuid';
+
 import { Store } from '@entities/Store/Store';
 import {
 	ICreateStoreDTO,
@@ -8,10 +10,10 @@ import {
 } from '@repositories/Stores/interfaces/IStoresRepository';
 
 class FakeStoresRepository implements IStoresRepository {
-	private stores: Store[];
+	private repository: Store[];
 
 	constructor() {
-		this.stores = [];
+		this.repository = [];
 	}
 
 	public async create({
@@ -25,7 +27,10 @@ class FakeStoresRepository implements IStoresRepository {
 	}: ICreateStoreDTO): Promise<Store> {
 		const store = new Store();
 
+		const id = uuidV4();
+
 		Object.assign(store, {
+			id,
 			addressId,
 			name,
 			cnpj,
@@ -35,42 +40,36 @@ class FakeStoresRepository implements IStoresRepository {
 			avatar,
 		});
 
-		this.stores.push(store);
+		this.repository.push(store);
 
 		return store;
 	}
 
 	public async save(store: Store): Promise<Store> {
-		const findIndex = this.stores.findIndex(
+		const findIndex = this.repository.findIndex(
 			findStore => findStore.id === store.id,
 		);
 
-		this.stores[findIndex] = store;
+		this.repository[findIndex] = store;
 
 		return store;
-	}
-
-	public async delete(store: Store): Promise<void> {
-		const updatedStores = [...this.stores];
-
-		const storeIndex = updatedStores.findIndex(
-			storeFind => storeFind.id === store.id,
-		);
-
-		if (storeIndex >= 0) {
-			updatedStores.splice(storeIndex, 1);
-		}
 	}
 
 	public async findByEmail({
 		email,
 		select,
 	}: IFindByEmailDTO): Promise<Store | undefined> {
-		const store = this.stores.find(findStore => findStore.email === email);
+		const store = this.repository.find(findStore => findStore.email === email);
 
-		select.forEach(atribute => {
-			delete store[atribute];
-		});
+		const keysStore = Object.keys(store);
+
+		if (store) {
+			select.forEach(atribute => {
+				if (!keysStore.includes(atribute)) {
+					delete keysStore[atribute];
+				}
+			});
+		}
 
 		return store;
 	}
@@ -79,26 +78,30 @@ class FakeStoresRepository implements IStoresRepository {
 		id,
 		select,
 	}: IFindByIdDTO): Promise<Store | undefined> {
-		const store = this.stores.find(findStore => findStore.id === id);
+		const store = this.repository.find(findStore => findStore.id === id);
 
-		select.forEach(atribute => {
-			delete store[atribute];
-		});
+		if (store) {
+			select.forEach(atribute => {
+				if (store[atribute]) {
+					delete store[atribute];
+				}
+			});
+		}
 
 		return store;
 	}
 
 	public async findAllStores({ select }: IFindAllStoresDTO): Promise<Store[]> {
-		const all_users = [...this.stores];
+		const allStores = [...this.repository];
 
-		all_users.forEach(user => {
+		allStores.forEach(store => {
 			select.forEach(atribute => {
 				// eslint-disable-next-line no-param-reassign
-				delete user[atribute];
+				delete store[atribute];
 			});
 		});
 
-		return all_users;
+		return allStores;
 	}
 }
 
