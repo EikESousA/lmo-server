@@ -17,24 +17,20 @@ class StoresRepository implements IStoresRepository {
 	}
 
 	public async create({
-		addressId,
 		name,
 		email,
-		cnpj,
+		phone,
 		instagram,
 		facebook,
-		phone,
-		avatar,
+		cnpj,
 	}: ICreateStoreDTO): Promise<Store> {
 		const store = this.repository.create({
-			addressId,
 			name,
 			email,
-			cnpj,
+			phone,
 			instagram,
 			facebook,
-			phone,
-			avatar,
+			cnpj,
 		});
 		await this.repository.save(store);
 		return store;

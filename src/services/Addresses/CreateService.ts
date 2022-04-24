@@ -50,8 +50,8 @@ class CreateService {
 			url,
 		});
 
-		delete address.created_at;
-		delete address.updated_at;
+		delete address.createdAt;
+		delete address.updatedAt;
 
 		log(`🏪 Endereço criado - CEP: ${cep}`);
 

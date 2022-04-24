@@ -91,8 +91,8 @@ class UpdateService {
 		store.avatar_url = store.getAvatar_URL();
 
 		delete store.avatar;
-		delete store.created_at;
-		delete store.updated_at;
+		delete store.createdAt;
+		delete store.updatedAt;
 
 		log(`🏪 Empresa atualizada - EMAIL: ${email}`);
 

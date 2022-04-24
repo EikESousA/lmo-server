@@ -14,7 +14,7 @@ class Store {
 	id: string;
 
 	@Column({ name: 'address_id' })
-	addressId: string;
+	addressId?: string;
 
 	@Column()
 	name: string;
@@ -23,31 +23,31 @@ class Store {
 	email: string;
 
 	@Column({ default: null, nullable: true })
-	cnpj: string;
+	cnpj?: string;
 
 	@Column({ default: null, nullable: true })
-	instagram: string;
+	instagram?: string;
 
 	@Column({ default: null, nullable: true })
-	facebook: string;
+	facebook?: string;
 
 	@Column({ default: null, nullable: true })
 	phone: string;
 
 	@Column({ default: null, nullable: true })
-	avatar: string;
+	avatar?: string;
 
 	@Column()
-	url: string;
+	url?: string;
 
 	@Column({ default: true })
 	activate: boolean;
 
-	@CreateDateColumn()
-	created_at: Date;
+	@CreateDateColumn({ name: 'created_at' })
+	createdAt: Date;
 
-	@UpdateDateColumn()
-	updated_at: Date;
+	@UpdateDateColumn({ name: 'updated_at' })
+	updatedAt: Date;
 
 	cnpj_formatted?: string;
 	getCnpjFormatted(): string | null {

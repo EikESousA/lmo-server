@@ -51,11 +51,10 @@ class CreateService {
 		const store = await this.StoresRepository.create({
 			name,
 			email,
-			cnpj,
-			facebook,
-			instagram,
 			phone,
-			addressId,
+			instagram,
+			facebook,
+			cnpj,
 		});
 
 		delete store.cnpj;
@@ -63,8 +62,8 @@ class CreateService {
 		delete store.facebook;
 		delete store.addressId;
 		delete store.phone;
-		delete store.created_at;
-		delete store.updated_at;
+		delete store.createdAt;
+		delete store.updatedAt;
 
 		log(`🏪 Empresa criada - EMAIL: ${email}`);
 

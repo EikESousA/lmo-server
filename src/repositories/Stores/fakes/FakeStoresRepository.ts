@@ -12,18 +12,32 @@ import {
 class FakeStoresRepository implements IStoresRepository {
 	private repository: Store[];
 
+	private repositoryKeys: (keyof Store)[] = [
+		'id',
+		'addressId',
+		'name',
+		'email',
+		'cnpj',
+		'instagram',
+		'facebook',
+		'phone',
+		'avatar',
+		'url',
+		'createdAt',
+		'updatedAt',
+	];
+
 	constructor() {
 		this.repository = [];
 	}
 
 	public async create({
-		addressId,
 		name,
-		cnpj,
+		email,
+		phone,
 		instagram,
 		facebook,
-		phone,
-		avatar,
+		cnpj,
 	}: ICreateStoreDTO): Promise<Store> {
 		const store = new Store();
 
@@ -31,13 +45,12 @@ class FakeStoresRepository implements IStoresRepository {
 
 		Object.assign(store, {
 			id,
-			addressId,
 			name,
-			cnpj,
+			email,
+			phone,
 			instagram,
 			facebook,
-			phone,
-			avatar,
+			cnpj,
 		});
 
 		this.repository.push(store);
@@ -61,12 +74,10 @@ class FakeStoresRepository implements IStoresRepository {
 	}: IFindByEmailDTO): Promise<Store | undefined> {
 		const store = this.repository.find(findStore => findStore.email === email);
 
-		const keysStore = Object.keys(store);
-
 		if (store) {
-			select.forEach(atribute => {
-				if (!keysStore.includes(atribute)) {
-					delete keysStore[atribute];
+			this.repositoryKeys.forEach(atribute => {
+				if (!select.includes(atribute)) {
+					delete store[atribute];
 				}
 			});
 		}
@@ -81,8 +92,8 @@ class FakeStoresRepository implements IStoresRepository {
 		const store = this.repository.find(findStore => findStore.id === id);
 
 		if (store) {
-			select.forEach(atribute => {
-				if (store[atribute]) {
+			this.repositoryKeys.forEach(atribute => {
+				if (!select.includes(atribute)) {
 					delete store[atribute];
 				}
 			});
@@ -95,9 +106,11 @@ class FakeStoresRepository implements IStoresRepository {
 		const allStores = [...this.repository];
 
 		allStores.forEach(store => {
-			select.forEach(atribute => {
-				// eslint-disable-next-line no-param-reassign
-				delete store[atribute];
+			this.repositoryKeys.forEach(atribute => {
+				if (!select.includes(atribute)) {
+					// eslint-disable-next-line no-param-reassign
+					delete store[atribute];
+				}
 			});
 		});
 

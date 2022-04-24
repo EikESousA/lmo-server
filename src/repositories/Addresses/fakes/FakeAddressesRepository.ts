@@ -10,6 +10,20 @@ import {
 class FakeAddressesRepository implements IAddressesRepository {
 	private repository: Address[];
 
+	private repositoryKeys: (keyof Address)[] = [
+		'id',
+		'street',
+		'district',
+		'number',
+		'cep',
+		'city',
+		'state',
+		'country',
+		'url',
+		'createdAt',
+		'updatedAt',
+	];
+
 	constructor() {
 		this.repository = [];
 	}
@@ -61,11 +75,9 @@ class FakeAddressesRepository implements IAddressesRepository {
 	}: IFindByIdDTO): Promise<Address | undefined> {
 		const address = this.repository.find(findAddress => findAddress.id === id);
 
-		const keysAddress = Object.keys(address);
-
 		if (address) {
-			select.forEach(atribute => {
-				if (!keysAddress.includes(atribute)) {
+			this.repositoryKeys.forEach(atribute => {
+				if (!select.includes(atribute)) {
 					delete address[atribute];
 				}
 			});

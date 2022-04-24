@@ -85,8 +85,8 @@ class UpdateService {
 
 		this.AddressesRepository.save(address);
 
-		delete address.created_at;
-		delete address.updated_at;
+		delete address.createdAt;
+		delete address.updatedAt;
 
 		log(`🏪 Endereço atualizado - CEP: ${cep}`);
 

@@ -1,7 +1,6 @@
 import { Store } from '@entities/Store/Store';
 
 interface ICreateStoreDTO {
-	addressId: string;
 	name: string;
 	email: string;
 	cnpj?: string;
@@ -27,14 +26,12 @@ interface IFindAllStoresDTO {
 
 interface IStoresRepository {
 	create({
-		addressId,
 		name,
 		email,
-		cnpj,
+		phone,
 		instagram,
 		facebook,
-		phone,
-		avatar,
+		cnpj,
 	}: ICreateStoreDTO): Promise<Store>;
 	save(store: Store): Promise<Store>;
 	findByEmail({ email, select }: IFindByEmailDTO): Promise<Store | undefined>;
