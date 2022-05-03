@@ -40,6 +40,15 @@ class Address {
 
 	@UpdateDateColumn({ name: 'updated_at' })
 	updatedAt: Date;
+
+	cepFormatted?: string;
+	getCepFormatted(): string | null {
+		if (!this.cep) {
+			return null;
+		}
+
+		return this.cep.replace(/^(\d{2})(\d{3})(\d{3})/, '$1.$2-$3');
+	}
 }
 
 export { Address };

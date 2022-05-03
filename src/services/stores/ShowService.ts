@@ -20,23 +20,27 @@ interface IResponse {
 class ShowService {
 	constructor(
 		@inject('StoresRepository')
-		private StoresRepository: IStoresRepository,
+		private storesRepository: IStoresRepository,
 	) {}
 
 	public async execute({ id }: IRequest): Promise<IResponse> {
-		const store = await this.StoresRepository.findById({
+		const store = await this.storesRepository.findById({
 			id,
 			select: ['id', 'name', 'email', 'avatar', 'activate'],
 		});
+
+		console.log(store);
 
 		if (!store) {
 			log(`❌ Empresa não existe`);
 			throw new AppError('Empresa não encontrado!');
 		}
 
-		store.avatar_url = store.getAvatar_URL();
+		if (store.avatar) {
+			store.avatarUrl = store.getAvatarURL();
 
-		delete store.avatar;
+			delete store.avatar;
+		}
 
 		log(`🏪 Empresa encontrado - NOME: ${store.name}`);
 

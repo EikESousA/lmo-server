@@ -26,7 +26,7 @@ interface IResponse {
 class CreateService {
 	constructor(
 		@inject('AddressesRepository')
-		private AddressesRepository: IAddressesRepository,
+		private addressesRepository: IAddressesRepository,
 	) {}
 
 	public async execute({
@@ -39,7 +39,7 @@ class CreateService {
 		country,
 		url,
 	}: IRequest): Promise<IResponse> {
-		const address = await this.AddressesRepository.create({
+		const address = await this.addressesRepository.create({
 			street,
 			district,
 			number,

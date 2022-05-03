@@ -21,12 +21,13 @@ interface IResponse {
 class ActivateService {
 	constructor(
 		@inject('StoresRepository')
-		private StoresRepository: IStoresRepository,
+		private storesRepository: IStoresRepository,
 	) {}
 
 	public async execute({ id, activate }: IRequest): Promise<IResponse> {
-		const store = await this.StoresRepository.findById({
+		const store = await this.storesRepository.findById({
 			id,
+			select: ['id', 'activate'],
 		});
 
 		if (!store) {
@@ -35,6 +36,8 @@ class ActivateService {
 		}
 
 		store.activate = activate;
+
+		this.storesRepository.save(store);
 
 		log(`🏪 Empresa atualizada - EMAIL: ${store.email}`);
 

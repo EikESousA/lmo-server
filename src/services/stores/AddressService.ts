@@ -4,6 +4,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { Store } from '@entities/Store/Store';
 import { AppError } from '@errors/AppError';
+import { IAddressesRepository } from '@repositories/Addresses/interfaces/IAddressesRepository';
 import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresRepository';
 import { log } from '@utils/log';
 
@@ -23,10 +24,12 @@ interface IResponse {
 }
 
 @injectable()
-class UpdateService {
+class AddressService {
 	constructor(
 		@inject('StoresRepository')
 		private storesRepository: IStoresRepository,
+		@inject('AddressesRepository')
+		private addressesRepository: IAddressesRepository,
 	) {}
 
 	public async execute({
@@ -84,9 +87,7 @@ class UpdateService {
 
 		this.storesRepository.save(store);
 
-		if (store.avatar) {
-			store.avatarUrl = store.getAvatarURL();
-		}
+		store.avatarUrl = store.getAvatarURL();
 
 		delete store.avatar;
 		delete store.createdAt;
@@ -98,4 +99,4 @@ class UpdateService {
 	}
 }
 
-export { UpdateService };
+export { AddressService };

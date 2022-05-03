@@ -20,11 +20,11 @@ interface IResponse {
 class ShowService {
 	constructor(
 		@inject('AddressesRepository')
-		private AddressesRepository: IAddressesRepository,
+		private addressesRepository: IAddressesRepository,
 	) {}
 
 	public async execute({ id }: IRequest): Promise<IResponse> {
-		const address = await this.AddressesRepository.findById({
+		const address = await this.addressesRepository.findById({
 			id,
 			select: [
 				'id',

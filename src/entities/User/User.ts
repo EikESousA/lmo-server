@@ -40,7 +40,7 @@ class User {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-	avatar_url?: string;
+	avatarUrl?: string;
 	getAvatar_URL(): string | null {
 		if (!this.avatar) {
 			return null;

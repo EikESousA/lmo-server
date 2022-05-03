@@ -49,7 +49,7 @@ class Store {
 	@UpdateDateColumn({ name: 'updated_at' })
 	updatedAt: Date;
 
-	cnpj_formatted?: string;
+	cnpjFormatted?: string;
 	getCnpjFormatted(): string | null {
 		if (!this.cnpj) {
 			return null;
@@ -61,7 +61,7 @@ class Store {
 		);
 	}
 
-	phone_formatted?: string;
+	phoneFormatted?: string;
 	getPhoneFormatted(): string | null {
 		if (!this.cnpj) {
 			return null;
@@ -70,8 +70,8 @@ class Store {
 		return this.phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
 	}
 
-	avatar_url?: string;
-	getAvatar_URL(): string | null {
+	avatarUrl?: string;
+	getAvatarURL(): string | null {
 		if (!this.avatar) {
 			return null;
 		}

@@ -28,7 +28,7 @@ interface IResponse {
 class UpdateService {
 	constructor(
 		@inject('AddressesRepository')
-		private AddressesRepository: IAddressesRepository,
+		private addressesRepository: IAddressesRepository,
 	) {}
 
 	public async execute({
@@ -42,7 +42,7 @@ class UpdateService {
 		country,
 		url,
 	}: IRequest): Promise<IResponse> {
-		const address = await this.AddressesRepository.findById({
+		const address = await this.addressesRepository.findById({
 			id,
 		});
 
@@ -83,7 +83,7 @@ class UpdateService {
 			address.url = url;
 		}
 
-		this.AddressesRepository.save(address);
+		this.addressesRepository.save(address);
 
 		delete address.createdAt;
 		delete address.updatedAt;

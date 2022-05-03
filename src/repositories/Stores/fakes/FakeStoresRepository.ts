@@ -51,6 +51,7 @@ class FakeStoresRepository implements IStoresRepository {
 			instagram,
 			facebook,
 			cnpj,
+			activate: true,
 		});
 
 		this.repository.push(store);
@@ -63,7 +64,33 @@ class FakeStoresRepository implements IStoresRepository {
 			findStore => findStore.id === store.id,
 		);
 
-		this.repository[findIndex] = store;
+		if (findIndex >= 0) {
+			console.log(this.repository[findIndex]);
+			if (store.name !== undefined) {
+				this.repository[findIndex].name = store.name;
+			}
+			if (store.email !== undefined) {
+				this.repository[findIndex].email = store.email;
+			}
+			if (store.phone !== undefined) {
+				this.repository[findIndex].phone = store.phone;
+			}
+			if (store.instagram !== undefined) {
+				this.repository[findIndex].instagram = store.instagram;
+			}
+			if (store.facebook !== undefined) {
+				this.repository[findIndex].facebook = store.facebook;
+			}
+			if (store.cnpj !== undefined) {
+				this.repository[findIndex].cnpj = store.cnpj;
+			}
+			if (store.avatar !== undefined) {
+				this.repository[findIndex].avatar = store.avatar;
+			}
+			if (store.activate !== undefined) {
+				this.repository[findIndex].activate = store.activate;
+			}
+		}
 
 		return store;
 	}
@@ -89,29 +116,42 @@ class FakeStoresRepository implements IStoresRepository {
 		id,
 		select,
 	}: IFindByIdDTO): Promise<Store | undefined> {
-		const store = this.repository.find(findStore => findStore.id === id);
+		const indexStore = this.repository.findIndex(
+			findStore => findStore.id === id,
+		);
 
-		if (store) {
+		if (indexStore >= 0) {
+			const store = new Store();
+
+			Object.assign(store, this.repository[indexStore]);
+
 			this.repositoryKeys.forEach(atribute => {
 				if (!select.includes(atribute)) {
 					delete store[atribute];
 				}
 			});
+
+			return store;
 		}
 
-		return store;
+		return null;
 	}
 
 	public async findAllStores({ select }: IFindAllStoresDTO): Promise<Store[]> {
-		const allStores = [...this.repository];
+		const allStores = [];
 
-		allStores.forEach(store => {
+		this.repository.forEach((store, index) => {
+			const newStore = new Store();
+
+			Object.assign(newStore, this.repository[index]);
+
 			this.repositoryKeys.forEach(atribute => {
 				if (!select.includes(atribute)) {
-					// eslint-disable-next-line no-param-reassign
-					delete store[atribute];
+					delete newStore[atribute];
 				}
 			});
+
+			allStores.push(newStore);
 		});
 
 		return allStores;

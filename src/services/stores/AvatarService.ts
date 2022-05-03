@@ -20,14 +20,14 @@ interface IResponse {
 @injectable()
 class AvatarService {
 	constructor(
-		@inject('StoreRepository')
-		private StoresRepository: IStoresRepository,
+		@inject('StoresRepository')
+		private storesRepository: IStoresRepository,
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
 	) {}
 
 	public async execute({ id, fileName }: IRequest): Promise<IResponse> {
-		const store = await this.StoresRepository.findById({
+		const store = await this.storesRepository.findById({
 			id,
 			select: ['id', 'avatar'],
 		});
@@ -45,9 +45,9 @@ class AvatarService {
 
 		store.avatar = filename;
 
-		await this.StoresRepository.save(store);
+		await this.storesRepository.save(store);
 
-		store.avatar_url = store.getAvatar_URL();
+		store.avatarUrl = store.getAvatarURL();
 
 		delete store.avatar;
 
