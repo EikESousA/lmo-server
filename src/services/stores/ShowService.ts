@@ -29,8 +29,6 @@ class ShowService {
 			select: ['id', 'name', 'email', 'avatar', 'activate'],
 		});
 
-		console.log(store);
-
 		if (!store) {
 			log(`❌ Empresa não existe`);
 			throw new AppError('Empresa não encontrado!');

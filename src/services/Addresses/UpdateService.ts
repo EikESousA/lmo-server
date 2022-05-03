@@ -44,6 +44,17 @@ class UpdateService {
 	}: IRequest): Promise<IResponse> {
 		const address = await this.addressesRepository.findById({
 			id,
+			select: [
+				'id',
+				'street',
+				'district',
+				'number',
+				'cep',
+				'city',
+				'state',
+				'country',
+				'url',
+			],
 		});
 
 		if (!address) {
