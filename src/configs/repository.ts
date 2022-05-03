@@ -3,5 +3,5 @@ interface IRespositoryConfig {
 }
 
 export default {
-	repository: process.env.REPOSITORY || 'fake',
+	repository: process.env.REPOSITORY_DRIVER || 'fake',
 } as IRespositoryConfig;
