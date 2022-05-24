@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { ActivateService } from '@services/Users/ActivateService';
-import { AvatarService } from '@services/Users/AvatarService';
-import { CreateService } from '@services/Users/CreateService';
-import { ForgotService } from '@services/Users/ForgotService';
-import { ListService } from '@services/Users/ListService';
-import { ResetService } from '@services/Users/ResetService';
-import { SessionService } from '@services/Users/SessionService';
-import { ShowService } from '@services/Users/ShowService';
-import { UpdateService } from '@services/Users/UpdateService';
+import { ActivateService } from '@services/Users/ActivateService.service';
+import { AvatarService } from '@services/Users/AvatarService.service';
+import { CreateService } from '@services/Users/CreateService.service';
+import { ForgotService } from '@services/Users/ForgotService.service';
+import { ListService } from '@services/Users/ListService.service';
+import { ResetService } from '@services/Users/ResetService.service';
+import { SessionService } from '@services/Users/SessionService.service';
+import { ShowService } from '@services/Users/ShowService.service';
+import { UpdateService } from '@services/Users/UpdateService.service';
 
 class UsersController {
 	public async create(request: Request, response: Response): Promise<Response> {

@@ -44,23 +44,31 @@ class StoresRepository implements IStoresRepository {
 		email,
 		select,
 	}: IFindByEmailDTO): Promise<Store | undefined> {
-		const store = await this.repository.findOne({ where: { email }, select });
+		const store = await this.repository.findOne({
+			where: { email },
+			select: select || null,
+		});
 
 		return store;
 	}
 
 	public async findById({
 		id,
-		select,
+		selectStore,
+		selectAddress,
 	}: IFindByIdDTO): Promise<Store | undefined> {
-		const store = await this.repository.findOne({ where: { id }, select });
+		const store = await this.repository.findOne({
+			where: { id },
+			select: select || null,
+			relations: ['address'],
+		});
 
 		return store;
 	}
 
 	public async findAllStores({ select }: IFindAllStoresDTO): Promise<Store[]> {
 		const stores = await this.repository.find({
-			select,
+			select: select || null,
 		});
 
 		return stores;

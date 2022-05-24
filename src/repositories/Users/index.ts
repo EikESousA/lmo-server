@@ -10,12 +10,12 @@ import { IUsersRepository } from '@repositories/Users/interfaces/IUsersRepositor
 
 const usersRepositories = {
 	fake: FakeUsersRepository,
-	implementation: UsersRepository,
+	db: UsersRepository,
 };
 
 const tokensRepositories = {
 	fake: FakeTokensRepository,
-	implementation: TokensRepository,
+	db: TokensRepository,
 };
 
 container.registerSingleton<IUsersRepository>(

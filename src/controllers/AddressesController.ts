@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { CreateService } from '@services/Addresses/CreateService';
-import { ShowService } from '@services/Addresses/ShowService';
-import { UpdateService } from '@services/Addresses/UpdateService';
+import { CreateService } from '@services/Addresses/CreateService.service';
+import { ShowService } from '@services/Addresses/ShowService.service';
+import { UpdateService } from '@services/Addresses/UpdateService.service';
 
 class AddressesController {
 	public async create(request: Request, response: Response): Promise<Response> {

@@ -26,7 +26,16 @@ class ShowService {
 	public async execute({ id }: IRequest): Promise<IResponse> {
 		const store = await this.storesRepository.findById({
 			id,
-			select: ['id', 'name', 'email', 'avatar', 'activate'],
+			select: [
+				'id',
+				'name',
+				'email',
+				'avatar',
+				'address',
+				'cnpj',
+				'facebook',
+				'instagram',
+			],
 		});
 
 		if (!store) {
@@ -38,6 +47,10 @@ class ShowService {
 			store.avatarUrl = store.getAvatarURL();
 
 			delete store.avatar;
+		}
+
+		if (store.addressId) {
+			delete store.addressId;
 		}
 
 		log(`🏪 Empresa encontrado - NOME: ${store.name}`);

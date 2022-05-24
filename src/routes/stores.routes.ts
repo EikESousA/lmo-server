@@ -27,5 +27,6 @@ storesRoutes.post(
 	StoresValidator.avatar,
 	storesController.avatar,
 );
+storesRoutes.post('/address', storesController.address);
 
 export { storesRoutes };

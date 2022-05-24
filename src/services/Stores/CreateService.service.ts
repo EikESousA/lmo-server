@@ -61,6 +61,8 @@ class CreateService {
 		delete store.facebook;
 		delete store.addressId;
 		delete store.phone;
+		delete store.avatar;
+		delete store.url;
 		delete store.createdAt;
 		delete store.updatedAt;
 

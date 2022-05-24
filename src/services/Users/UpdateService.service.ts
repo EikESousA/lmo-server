@@ -101,7 +101,7 @@ class UpdateService {
 
 		this.usersRepository.save(user);
 
-		user.avatar_url = user.getAvatar_URL();
+		user.avatarUrl = user.getAvatar_URL();
 
 		delete user.password;
 		delete user.avatar;

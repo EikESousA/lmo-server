@@ -47,14 +47,14 @@ class AvatarService {
 
 		await this.usersRepository.save(user);
 
-		user.avatar_url = user.getAvatar_URL();
+		user.avatarUrl = user.getAvatar_URL();
 
 		delete user.avatar;
 
 		log(`🧑 Usuário alterou avatar - EMAIL: ${user.email}`);
 
 		return {
-			data: user.avatar_url,
+			data: user.avatarUrl,
 			message: 'Avatar do usuário alterado com sucesso!',
 		};
 	}

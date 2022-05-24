@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { ActivateService } from '@services/Stores/ActivateService';
-import { AvatarService } from '@services/Stores/AvatarService';
-import { CreateService } from '@services/Stores/CreateService';
-import { ListService } from '@services/Stores/ListService';
-import { ShowService } from '@services/Stores/ShowService';
-import { UpdateService } from '@services/Stores/UpdateService';
+import { ActivateService } from '@services/Stores/ActivateService.service';
+import { AddressService } from '@services/Stores/AddressService.service';
+import { AvatarService } from '@services/Stores/AvatarService.service';
+import { CreateService } from '@services/Stores/CreateService.service';
+import { ListService } from '@services/Stores/ListService.service';
+import { ShowService } from '@services/Stores/ShowService.service';
+import { UpdateService } from '@services/Stores/UpdateService.service';
 
 class StoresController {
 	public async create(request: Request, response: Response): Promise<Response> {
@@ -95,6 +96,40 @@ class StoresController {
 		}
 
 		return response.status(400).send();
+	}
+
+	public async address(
+		request: Request,
+		response: Response,
+	): Promise<Response> {
+		const {
+			storeId,
+			addressId,
+			street,
+			district,
+			number,
+			cep,
+			city,
+			state,
+			country,
+			url,
+		} = request.body;
+
+		const addressService = container.resolve(AddressService);
+
+		const dataService = await addressService.execute({
+			storeId,
+			addressId,
+			street,
+			district,
+			number,
+			cep,
+			city,
+			state,
+			country,
+			url,
+		});
+		return response.json(dataService);
 	}
 }
 

@@ -65,6 +65,9 @@ class FakeStoresRepository implements IStoresRepository {
 		);
 
 		if (findIndex >= 0) {
+			if (store.addressId !== undefined) {
+				this.repository[findIndex].addressId = store.addressId;
+			}
 			if (store.name !== undefined) {
 				this.repository[findIndex].name = store.name;
 			}

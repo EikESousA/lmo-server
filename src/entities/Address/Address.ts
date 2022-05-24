@@ -32,7 +32,7 @@ class Address {
 	@Column()
 	country: string;
 
-	@Column()
+	@Column({ default: null, nullable: true })
 	url?: string;
 
 	@CreateDateColumn({ name: 'created_at' })

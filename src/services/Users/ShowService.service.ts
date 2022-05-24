@@ -37,7 +37,7 @@ class ShowService {
 			throw new AppError('Usuário não encontrado!');
 		}
 
-		user.avatar_url = user.getAvatar_URL();
+		user.avatarUrl = user.getAvatar_URL();
 
 		delete user.avatar;
 

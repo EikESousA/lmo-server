@@ -7,7 +7,7 @@ import { IAddressesRepository } from '@repositories/Addresses/interfaces/IAddres
 
 const addressesRepositories = {
 	fake: FakeAddressesRepository,
-	implementation: AddressesRepository,
+	db: AddressesRepository,
 };
 
 container.registerSingleton<IAddressesRepository>(

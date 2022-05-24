@@ -1,5 +1,5 @@
 interface IRespositoryConfig {
-	repository: 'fake' | 'implementation';
+	repository: 'fake' | 'db';
 }
 
 export default {

@@ -16,13 +16,13 @@ import rateLimiter from '@middlewares/rateLimiter';
 import { routes } from '@routes/index.routes';
 import { staticRoutes } from '@routes/static.routes';
 
-if (repositoryConfig.repository === 'implementation') {
+if (repositoryConfig.repository === 'db') {
 	createConnection();
 }
 
 const app = express();
 
-if (repositoryConfig.repository === 'implementation') {
+if (repositoryConfig.repository === 'db') {
 	app.use(rateLimiter);
 }
 

@@ -1,3 +1,4 @@
+import { Address } from '@entities/Address/Address';
 import { Store } from '@entities/Store/Store';
 
 interface ICreateStoreDTO {
@@ -12,16 +13,19 @@ interface ICreateStoreDTO {
 
 interface IFindByEmailDTO {
 	email: string;
-	select?: (keyof Store)[];
+	selectStore?: (keyof Store)[];
+	selectAddress?: (keyof Store)[];
 }
 
 interface IFindByIdDTO {
 	id: string;
-	select?: (keyof Store)[];
+	selectStore?: (keyof Store)[];
+	selectAddress?: (keyof Store)[];
 }
 
 interface IFindAllStoresDTO {
-	select?: (keyof Store)[];
+	selectStore?: (keyof Store)[];
+	selectAddress?: (keyof Address)[];
 }
 
 interface IStoresRepository {

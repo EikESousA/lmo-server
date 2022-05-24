@@ -7,7 +7,7 @@ import { IStoresRepository } from '@repositories/Stores/interfaces/IStoresReposi
 
 const storesRepositories = {
 	fake: FakeStoresRepository,
-	implementation: StoresRepository,
+	db: StoresRepository,
 };
 
 container.registerSingleton<IStoresRepository>(

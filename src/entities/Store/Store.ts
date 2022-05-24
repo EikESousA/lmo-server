@@ -4,17 +4,24 @@ import {
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
+	OneToOne,
+	JoinColumn,
 } from 'typeorm';
 
 import uploadConfig from '@configs/upload';
+import { Address } from '@entities/Address/Address';
 
 @Entity('store')
 class Store {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column({ name: 'address_id' })
+	@Column({ name: 'address_id', default: null, nullable: true })
 	addressId?: string;
+
+	@OneToOne(() => Address)
+	@JoinColumn({ name: 'address_id' })
+	address: Address;
 
 	@Column()
 	name: string;
@@ -37,7 +44,7 @@ class Store {
 	@Column({ default: null, nullable: true })
 	avatar?: string;
 
-	@Column()
+	@Column({ default: null, nullable: true })
 	url?: string;
 
 	@Column({ default: true })

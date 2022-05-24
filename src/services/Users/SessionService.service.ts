@@ -70,7 +70,7 @@ class SessionService {
 			expiresIn,
 		});
 
-		user.avatar_url = user.getAvatar_URL();
+		user.avatarUrl = user.getAvatar_URL();
 
 		delete user.avatar;
 		delete user.password;

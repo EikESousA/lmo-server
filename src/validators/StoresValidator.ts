@@ -68,6 +68,15 @@ class StoresValidator {
 
 		return verifyError({ request, response, next, schema });
 	}
+
+	address(request: Request, response: Response, next: NextFunction) {
+		const schema = Joi.object().keys({
+			storeId: Joi.string().required().label('ID da loja'),
+			addressId: Joi.string().required().label('ID da loja'),
+		});
+
+		return verifyError({ request, response, next, schema });
+	}
 }
 
 export default new StoresValidator();
